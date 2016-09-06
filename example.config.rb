@@ -1,0 +1,1 @@
+configatron.token = 'YOUR TOKEN'

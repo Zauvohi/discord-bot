@@ -1,0 +1,2 @@
+require 'discordrb'
+require 'configatron'
