@@ -5,11 +5,9 @@ class RaidSignup
     @roles = {}
   end
 
-  def load_roles(raid_list)
-    if (raid_list.key?(@raid_name))
-      raid_list[@raid_name]['roles'].each do |role|
-        @roles[role] = 'Unassigned'
-      end
+  def load_roles(roles)
+    roles.each do |role|
+      @roles[role] = 'Unassigned'
     end
   end
 
