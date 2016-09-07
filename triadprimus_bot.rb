@@ -9,16 +9,25 @@ bot = Discordrb::Commands::CommandBot.new token: configatron.token, application_
 
 @raid_details = YAML::load_file('lib/raid_list.yml')
 @raid_list = {}
+LIST_MAX_LENGHT = 2
 
 bot.command(:stick, chain_usable: false) do |event|
   event.respond "https://cdn.discordapp.com/attachments/190607069093691393/222907225809747968/a_fucking_stick_lamo.png"
+end
+
+bot.command(:otsu, chain_usable: false) do |event|
+  event.respond "https://cdn.discordapp.com/attachments/222920939598381060/223097379279208449/8KzSio.png"
+end
+
+bot.command(:idolsheet, chain_usable: false) do |event|
+  event.respond configatron.links.spreadsheet
 end
 
 bot.command(:make_raid, chain_usable: false) do |event, raid_name|
   if (@raid_details.key?(raid_name))
     raid_signup = RaidSignup.new(raid_name)
 
-    if (@raid_list.size === 15)
+    if (@raid_list.size === LIST_MAX_LENGHT)
       @raid_list.shift
     end
 
@@ -46,8 +55,8 @@ end
 bot.command(:leave_raid, chain_usable: false) do |event, raid_id|
   raid_id = raid_id.upcase
   raid = @raid_list[raid_id]
-  raid.unassign(event.user)
-  event.respond "#{event.user} left #{raid.name}."
+  raid.unassign(event.user.name)
+  event.respond "#{event.user.name} left #{raid.name}."
 end
 
 bot.command(:checkraid, chain_usable: false) do |event, raid_id|
