@@ -1,7 +1,6 @@
 require 'discordrb'
 require 'dotenv'
 require_relative './lib/picture_commands'
-require_relative './config/config'
 require_relative './lib/raid_commands'
 require_relative './lib/messages'
 Dotenv.load
