@@ -31,4 +31,13 @@ class RaidSignup
       end
     end
   end
+
+  def roles_missing
+    missing_roles = []
+    @roles.each do |key, value|
+      if (value === 'Unassigned')
+        missing_roles.push(key)
+    end
+    missing_roles.join(' ')
+  end
 end

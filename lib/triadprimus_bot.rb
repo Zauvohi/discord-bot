@@ -22,6 +22,7 @@ bot.command(:make_raid, chain_usable: false) do |event, raid_name|
     raid_id = Utilities.generate_id(raid_name)
     raid = { raid_id: raid_id, raid: raid_signup }
     @raid_list.push(raid)
+    event.response "Raid id: #{raid_id}, roles missing: #{raid_signup.roles_missing}"
   else
     event.response "This raid doesn't exist, bwaka."
   end
