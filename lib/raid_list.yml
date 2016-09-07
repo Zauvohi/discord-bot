@@ -1,0 +1,68 @@
+rose_queen:
+  roles:
+    df(ar3)
+    ss(blind)
+    hs(di3)
+    hs(clear)
+    bs(clear)
+    he(break)
+
+macula_marius:
+  roles:
+    df(ar3)
+    ss(charm)
+    hs(di3)
+    hs(blind)
+    bs(clear)
+    bs(clear)
+
+medusa:
+  roles:
+    df(ar3)
+    ss(charm)
+    hs(di3)
+    hs(blind)
+    bs(clear)
+    bs(clear)
+
+apollo:
+  roles:
+    df(ar3)
+    ss(charm)
+    hs(di3)
+    hs(blind)
+    bs(clear)
+    bs(free)
+
+d_angel_oliva:
+  roles:
+    df(ar3)
+    ss(charm)
+    hs(di3)
+    hs(blind)
+    bs(clear)
+    bs(free)
+
+proto_bahamut:
+  roles:
+    df(blind)
+    df(blind)
+    df(down)
+    ss(charm)
+    ss(charm)
+    ss(charm)
+    bs(clear)
+    bs(clear)
+    bs(clear)
+    bs(clear)
+    hs(di3)
+    hs(di3)
+    hs(ar3)
+    hs(ar3)
+    hs(rage)
+    hs(rage)
+    he(break)
+    he(break)
+
+nataku:
+  roles:
