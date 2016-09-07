@@ -1,7 +1,8 @@
 class RaidSignup
+  attr_reader :name
 
   def new(raid_name)
-    @raid_name = raid_name
+    @name = raid_name
     @roles = []
     @users = []
   end
@@ -11,7 +12,7 @@ class RaidSignup
     @users = Array.new(@roles.size, 'Unassigned')
   end
 
-  def already_assigned(user)
+  def is_assigned(user)
     @users.each do |value|
       return true if (value === user)
     end
@@ -23,8 +24,11 @@ class RaidSignup
       @roles.each_with_index do |role, index|
         if (@roles[index] === role && @users[index] === 'Unassigned')
           @users[index] = user
+          return true
         end
       end
+    else
+      return false
     end
   end
 
@@ -40,5 +44,16 @@ class RaidSignup
       end
     end
     missing_roles.join(' ')
+  end
+
+  def users_signed
+    users = []
+    @users.each_with_index do |user, index|
+      if (user !== 'Unassigned')
+        users.push("#{user} as #{@roles[index]}")
+      end
+    end
+
+    users.join(' ')
   end
 end

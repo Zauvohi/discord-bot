@@ -28,9 +28,30 @@ bot.command(:make_raid, chain_usable: false) do |event, raid_name|
 end
 
 bot.command(:join_raid, chain_usable: false) do |event, raid_id, role|
-  role = role.split.join
-  @raid_list.each do |key, value|
+  role = role.downcase.split.join
+  raid_id = raid_id.upcase
+  user = event.user
+  raid = @raid_list[raid_id]
+  if (raid.assign(user, role))
+    event.response "User #{user} joined #{raid.name} as #{role}"
+  else
+    event.response "#{user} you're already in this raid."
   end
+
+end
+bot.command(:leave_raid, chain_usable: false) do |event, raid_id|
+  raid_id = raid_id.upcase
+  raid = @raid_list[raid_id]
+  raid.unassign(event.user)
+  event.response "#{event.user} left #{raid.name}."
+end
+
+bot.command(:checkraid, chain_usable: false) do |event, raid_id|
+  raid_id = raid_id.upcase
+  raid = @raid_list[raid_id]
+  event << "Raid: #{raid.name}"
+  event << "Members joined: #{raid.users_signed}"
+  event << "Roles missing: #{raid.roles_missing}"
 end
 
 bot.run :async
