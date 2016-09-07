@@ -34,7 +34,7 @@ end
 bot.command(:join_raid, chain_usable: false) do |event, raid_id, role|
   role = role.downcase.split.join
   raid_id = raid_id.upcase
-  user = event.user
+  user = event.user.name
   raid = @raid_list[raid_id]
   if (raid.assign(user, role))
     event.respond "User #{user} joined #{raid.name} as #{role}"

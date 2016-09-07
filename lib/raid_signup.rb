@@ -1,7 +1,7 @@
 class RaidSignup
   attr_reader :name
 
-  def new(raid_name)
+  def initialize(raid_name)
     @name = raid_name
     @roles = []
     @users = []
@@ -20,7 +20,7 @@ class RaidSignup
   end
 
   def assign(user, role)
-    if (self.already_assigned(user) === false)
+    if (self.is_assigned(user) === false)
       @roles.each_with_index do |role, index|
         if (@roles[index] === role && @users[index] === 'Unassigned')
           @users[index] = user
