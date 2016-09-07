@@ -1,1 +1,3 @@
-configatron.token = 'YOUR TOKEN'
+configatron.appid = 'app id'
+configatron.token = "your token"
+configatron.channelurl = "secret url"
