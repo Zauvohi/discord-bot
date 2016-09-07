@@ -49,7 +49,7 @@ class RaidSignup
   def users_signed
     users = []
     @users.each_with_index do |user, index|
-      if (user !== 'Unassigned')
+      if (user != 'Unassigned')
         users.push("#{user} as #{@roles[index]}")
       end
     end
