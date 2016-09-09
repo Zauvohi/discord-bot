@@ -17,16 +17,16 @@ The commands have a "!" prefix.
     * Joins a raid as a certain class, EX skills are optional. Example: !join apollo DF(AR3)
   * leave [raid_name]
     * leaves a raid. Example: !leave apollo
-  * check [raid_name] (optional)
-    * Check a raid status (members joined and their roles and suggested roles) if given a raid name, otherwise it'll list all the raids and how many people joined.
-      * Example: !check apollo
-        * Raid: Apollo (1/6) Members joined: sied as HE(TH3) Roles suggested:
-        * DF(AR3) SS(CHARM) HS(DI3) HS(BLIND) BS(CLEAR) BS(FREE)
-      * Example: !check
-        * Raid: Apollo - Joined: 1/6
-        * Raid: Rose Queen - Joined: 0/6
-  * finsh ends a the raid the user created and sends a otsu sticker.
-  * Filter: whenever someone sends a message with "dumb clarise" (or a lot of variations like clarice, clarrise, etc), the bot will send a clarise picture.
+* check [raid_name] (optional)
+  * Check a raid status (members joined and their roles and suggested roles) if given a raid name, otherwise it'll list all the raids and how many people joined.
+    * Example: !check apollo
+      * Raid: Apollo (1/6) Members joined: sied as HE(TH3) Roles suggested:
+      * DF(AR3) SS(CHARM) HS(DI3) HS(BLIND) BS(CLEAR) BS(FREE)
+    * Example: !check
+      * Raid: Apollo - Joined: 1/6
+      * Raid: Rose Queen - Joined: 0/6
+* finsh ends a the raid the user created and sends a otsu sticker.
+* Filter: whenever someone sends a message with "dumb clarise" (or a lot of variations like clarice, clarrise, etc), the bot will send a clarise picture.
 
 ## TODO:
   * Twitter integration to fetch the Angel Halo hours.
