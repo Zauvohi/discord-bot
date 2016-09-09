@@ -11,13 +11,13 @@ The commands have a "!" prefix.
   * windmeme (sends a random windememe releated picture)
   * snek (sends a laughing snek, there's a rare chance to get a dagger!)
 * Raid making commands
-  * create [raid_name]
+  * create raid_name
     * Creates a raid. Example: !create apollo
-  * join [raid_name] [class]
+  * join raid_name class
     * Joins a raid as a certain class, EX skills are optional. Example: !join apollo DF(AR3)
-  * leave [raid_name]
+  * leave raid_name
     * leaves a raid. Example: !leave apollo
-* check [raid_name] (optional)
+* check raid_name (optional)
   * Check a raid status (members joined and their roles and suggested roles) if given a raid name, otherwise it'll list all the raids and how many people joined.
     * Example: !check apollo
       * Raid: Apollo (1/6) Members joined: sied as HE(TH3) Roles suggested:
