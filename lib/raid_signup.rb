@@ -1,57 +1,58 @@
 class RaidSignup
   attr_reader :name
+  attr_reader :creator
 
-  def initialize(raid_name)
-    @name = raid_name
-    @roles = []
-    @users = []
+  def initialize(raid_name, user)
+    @name = raid_name.split("_").each { |v| v.capitalize! }.join(" ")
+    @suggested_roles = []
+    @users = {}
+    @creator = user
   end
 
   def load_roles(roles)
-    @roles = roles.split
-    @users = Array.new(@roles.size, 'Unassigned')
+    @suggested_roles = roles.upcase.split
+  end
+
+  def suggested_roles
+    @suggested_roles.join(" ")
   end
 
   def is_assigned(user)
-    @users.each do |value|
-      return true if (value === user)
+    @users.each do |key, value|
+      return true if (key === user)
     end
     return false
   end
 
-  def assign(user, role)
+  def add(user, role)
     if (self.is_assigned(user) === false)
-      @roles.each_with_index do |role, index|
-        if (@roles[index] === role && @users[index] === 'Unassigned')
-          @users[index] = user
-          return true
-        end
-      end
+      @users[user] = role
     else
       return false
     end
   end
 
   def unassign(user)
+    return false unless self.is_assigned(user)
     @users.delete(user)
   end
 
-  def roles_missing
-    missing_roles = []
-    @roles.each_with_index do |role, index|
-      if (@users[index] === 'Unassigned')
-        missing_roles.push(role)
-      end
-    end
-    missing_roles.join(' ')
+  def users_joined
+    @users.size
+  end
+
+  def raid_size
+    @suggested_roles.size
+  end
+
+  def is_full?
+    self.users_joined === self.raid_size
   end
 
   def users_signed
     users = []
-    @users.each_with_index do |user, index|
-      if (user != 'Unassigned')
-        users.push("#{user} as #{@roles[index]}")
-      end
+    @users.each do |user, role|
+      users.push("#{user} as #{role}")
     end
 
     users.join(' ')

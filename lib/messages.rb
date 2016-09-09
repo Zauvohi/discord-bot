@@ -2,7 +2,7 @@ module Messages
   extend Discordrb::EventContainer
   require_relative 'utilities'
 
-  message(containing: /dumb clarisse|dumb clarise|dumb clarrise/) do |event|
+  message(containing: /dumb clarisse|dumb clarise|dumb clarrise|dumb clarice/) do |event|
     clarise_pics = [
       "https://cdn.discordapp.com/attachments/222920939598381060/223119041269727234/1467570514071.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223119071409864705/1468286308084.png",
