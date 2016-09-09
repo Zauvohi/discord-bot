@@ -1,5 +1,5 @@
 # Tsumugi Discord bot
-A small discord bot using discordrb (https://github.com/meew0/discordrb/).
+A small discord bot using [discordrb](https://github.com/meew0/discordrb/).
 
 ## List of current commands and filters
 The commands have a "!" prefix.
