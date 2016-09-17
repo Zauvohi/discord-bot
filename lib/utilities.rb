@@ -8,7 +8,7 @@ class Utilities
     end
   end
 
-  def self.random_pic(pic_array)
+  def self.random_element(pic_array)
     pics_lenght = pic_array.size
     return pic_array[rand(0 .. pics_lenght - 1)]
   end

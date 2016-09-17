@@ -10,6 +10,11 @@ module Messages
       "https://cdn.discordapp.com/attachments/222920939598381060/223119116045778944/1468707091151.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223119174061391875/1469303650737.jpg"
     ]
-    event.respond Utilities.random_pic(clarise_pics)
+    event.respond Utilities.random_element(clarise_pics)
+  end
+
+  mention(containing: /or+|\?/) do |event|
+    msg = event.message.content.scan(/\b(?:(?!or)\w)+\b/)
+    event.respond Utilities.random_element(msg)
   end
 end

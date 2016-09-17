@@ -36,7 +36,7 @@ module PictureCommands
     if (rand(0 .. 10000) === 777)
       pic = "https://cdn.discordapp.com/attachments/222920939598381060/223225019856191488/dagger.png"
     else
-      pic = Utilities.random_pic(snek_pics)
+      pic = Utilities.random_element(snek_pics)
     end
     event.respond pic
   end
@@ -53,7 +53,7 @@ module PictureCommands
       "https://cdn.discordapp.com/attachments/222920939598381060/223112048224108545/wind_memers.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223116810612899840/1466962326898.jpg"
     ]
-    event.respond Utilities.random_pic(wind_pics)
+    event.respond Utilities.random_element(wind_pics)
   end
 
   command(:sen,
@@ -66,7 +66,7 @@ module PictureCommands
       "https://cdn.discordapp.com/attachments/222920939598381060/223115601932058624/SEN.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223117884866560000/1470513527971.jpg"
     ]
-    event.respond Utilities.random_pic(sen_pics)
+    event.respond Utilities.random_element(sen_pics)
   end
 
   command(:police,
