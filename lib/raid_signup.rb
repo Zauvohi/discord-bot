@@ -22,13 +22,13 @@ class RaidSignup
       return true if (key === user)
     end
     return false
-  end
 
+  end
   def add(user, role)
     if (self.is_assigned(user) === false)
       @users[user] = role
     else
-      return false
+      false
     end
   end
 
