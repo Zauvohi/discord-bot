@@ -14,7 +14,26 @@ module Messages
   end
 
   mention(containing: /or+|\?/) do |event|
-    msg = event.message.content.scan(/\b(?:(?!or)\w)+\b/)
-    event.respond Utilities.random_element(msg)
+    bot_id = event.bot.profile.id
+    puts bot_id
+    msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
+    puts msg
+    words = []
+
+    if msg.include?("or")
+      msg = msg.split("or")
+      msg.each do |element|
+        if element.include?(",")
+          words.concat(element.split(","))
+        else
+          words << element
+        end
+      end
+    elsif msg.include?(",")
+      words = msg.split(",")
+    else
+      words = ["yes", "no", "i dunno" "nope." "lolno", "ye", "probably", "yes if you kill the HRT"]
+    end
+    event.respond Utilities.random_element(words)
   end
 end
