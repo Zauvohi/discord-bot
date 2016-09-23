@@ -32,7 +32,7 @@ module Messages
     elsif msg.include?(",")
       words = msg.split(",")
     else
-      words = ["yes", "no", "i dunno" "nope." "lolno", "ye", "probably", "yes if you kill the HRT"]
+      words = ["yes", "no", "i dunno", "nope.", "lolno", "ye", "probably", "yes if you kill the HRT"]
     end
     event.respond Utilities.random_element(words)
   end
