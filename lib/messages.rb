@@ -16,14 +16,14 @@ module Messages
   mention(containing: /or+|\?/) do |event|
     bot_id = event.bot.profile.id
     msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
+    msg = msg.sub("?", "")
     words = []
 
-    nil unless msg.size > 3
+    nil unless msg.split(" ").size >= 3
 
     if msg.include?("or")
       msg = msg.split("or")
       msg.each do |element|
-        element.sub("?", "")
         if element.include?(",")
           words.concat(element.split(","))
         else
