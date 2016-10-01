@@ -13,7 +13,7 @@ module Messages
     event.respond Utilities.random_element(clarise_pics)
   end
 
-  mention(containing: /or+|\?/) do |event|
+  mention(containing: /\sor\s+|\?/) do |event|
     bot_id = event.bot.profile.id
     msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
     msg = msg.sub("?", "")
@@ -21,7 +21,7 @@ module Messages
 
     nil unless msg.split(" ").size >= 3
 
-    if msg.include?("or")
+    if (/\sor\s/ =~ msg) != nil
       msg = msg.split("or")
       msg.each do |element|
         if element.include?(",")
