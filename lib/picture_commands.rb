@@ -51,7 +51,8 @@ module PictureCommands
       "https://cdn.discordapp.com/attachments/222920939598381060/223112027575549953/windmeme3.png",
       "https://cdn.discordapp.com/attachments/222920939598381060/223111938463367168/1465766595855.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223112048224108545/wind_memers.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223116810612899840/1466962326898.jpg"
+      "https://cdn.discordapp.com/attachments/222920939598381060/223116810612899840/1466962326898.jpg",
+      "https://cdn.discordapp.com/attachments/190607069093691393/232585721163153408/windmemes6.jpg"
     ]
     event.respond Utilities.random_element(wind_pics)
   end
