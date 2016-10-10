@@ -2,7 +2,7 @@ module Messages
   extend Discordrb::EventContainer
   require_relative 'utilities'
 
-  message(containing: /dumb clarisse|dumb clarise|dumb clarrise|dumb clarice/) do |event|
+  message(containing: /dumb clar+i*(c+|s+)e+/) do |event|
     clarise_pics = [
       "https://cdn.discordapp.com/attachments/222920939598381060/223119041269727234/1467570514071.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223119071409864705/1468286308084.png",
@@ -33,7 +33,7 @@ module Messages
     elsif msg.include?(",")
       words = msg.split(",")
     else
-      words = ["yes", "no", "i dunno", "nope.", "lolno", "ye", "probably", "yes if you kill the HRT"]
+      words = ["yes", "no", "i dunno", "nope.", "lolno", "ye", "probably", "yes, but you have to kill HRT"]
     end
 
     event.respond Utilities.random_element(words)
