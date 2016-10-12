@@ -66,18 +66,18 @@ proto_bahamut:
 
 nataku:
   roles:
-    Free(free)
-    Free(free)
-    Free(free)
-    Free(free)
-    Free(free)
-    Free(free)
+    ss(charm)
+    df(ar3)
+    hs(di3)
+    bs(clear)
+    hs(blind)
+    free
 
 flam_glass:
   roles:
-    HS
-    HS
-    SS
-    DF
-    DF
-    BS
+    hs
+    hs
+    ss
+    df(dirt)
+    df(water)
+    bs
