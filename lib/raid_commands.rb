@@ -12,7 +12,17 @@ module RaidCommands
   command(:create, chain_usable: false) do |event, *args|
     begin
       raid_name = Utilities.underscore(args)
-      if (@raid_details.key?(raid_name))
+
+      unless @raid_details.has_key?(raid_name)
+        @raid_details.each do |k, v|
+          aliases = v['aliases'].respond_to?(:split) ? v['aliases'].split : []
+          if aliases.include?(raid_name)
+            raid_name = k
+          end
+        end
+      end
+
+      if (@raid_details.has_key?(raid_name))
         raid_signup = RaidSignup.new(raid_name, event.user.name)
 
         if (@raid_list.size === LIST_MAX_LENGHT)
