@@ -72,3 +72,12 @@ nataku:
     Free(free)
     Free(free)
     Free(free)
+
+flam_glass:
+  roles:
+    HS
+    HS
+    SS
+    DF
+    DF
+    BS
