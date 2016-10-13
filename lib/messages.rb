@@ -13,6 +13,12 @@ module Messages
     event.respond Utilities.random_element(clarise_pics)
   end
 
+  message(containing: /mo+d+s+/i) do |event|
+    event.respond "MOOOODDS"
+    event.respond "https://cdn.discordapp.com/attachments/222920939598381060/236234989501415424/HorribleSubs_Amaama_to_Inazuma_-_07_720p.mkv_snapshot_13.51_2016.09.09_02.33.07.jpg"
+
+  end
+
   mention(containing: /\sor\s+|\?/) do |event|
     bot_id = event.bot.profile.id
     msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
