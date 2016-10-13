@@ -9,18 +9,15 @@ module RaidCommands
   @raid_list = {}
   @error_message = "My tummy hurts ;_;"
 
+  @raid_details.each do |k, v|
+    aliases = v['aliases'].respond_to?(:split) ? v['aliases'].split : []
+    @raid_details[k]['aliases'] = aliases
+  end
+
   command(:create, chain_usable: false) do |event, *args|
     begin
-      raid_name = Utilities.underscore(args)
-
-      unless @raid_details.has_key?(raid_name)
-        @raid_details.each do |k, v|
-          aliases = v['aliases'].respond_to?(:split) ? v['aliases'].split : []
-          if aliases.include?(raid_name)
-            raid_name = k
-          end
-        end
-      end
+      name = Utilities.underscore(args)
+      raid_name = Utilities.find_raid_name(name, @raid_details)
 
       if (@raid_details.has_key?(raid_name))
         raid_signup = RaidSignup.new(raid_name, event.user.name)
@@ -31,7 +28,12 @@ module RaidCommands
 
         raid_signup.load_roles(@raid_details[raid_name]['roles'])
         @raid_list[raid_name] = raid_signup
-        event.respond "Raid: #{raid_signup.name}, roles suggested: #{raid_signup.suggested_roles}"
+        event << "Raid: #{raid_signup.name}"
+        event << "Roles:"
+        raid_signup.suggested_roles.each do |role|
+          event << role
+        end
+        nil
       else
         event.respond "This raid doesn't exist, bwaka."
       end
@@ -47,14 +49,13 @@ module RaidCommands
   command(:join, chain_usable: false) do |event, *args|
     begin
       role = args.pop.upcase
-      raid_name = Utilities.underscore(args)
+      name = Utilities.underscore(args)
+      raid_name = Utilities.find_raid_name(name, @raid_details)
       user = event.user.name
       raid = @raid_list[raid_name]
-      if (raid.is_full?)
-        event.respond "Raid is full."
-      elsif (raid.add(user, role))
-        event.respond "User #{user} joined #{raid.name} as #{role}"
-      else
+
+      event.respond "Raid is full." if raid.is_full?
+      unless raid.add(user, role)
         event.respond "#{user} you're already in this raid."
       end
     rescue
@@ -64,15 +65,15 @@ module RaidCommands
         @error_message
       end
     end
-
   end
+
   command(:leave, chain_usable: false) do |event, *args|
     begin
-      raid_name = Utilities.underscore(args)
+      name = Utilities.underscore(args)
+      raid_name = Utilities.find_raid_name(name, @raid_details)
       raid = @raid_list[raid_name]
-      if (raid.unassign(event.user.name))
-        event.respond "#{event.user.name} left #{raid.name}."
-      else
+
+      unless raid.unassign(event.user.name)
         event.respond "? You aren't even in that raid, bwaka!"
       end
     rescue
@@ -92,11 +93,15 @@ module RaidCommands
         end
         nil
       else
-        raid_name = Utilities.underscore(args)
+        name = Utilities.underscore(args)
+        raid_name = Utilities.find_raid_name(name, @raid_details)
         raid = @raid_list[raid_name]
         event << "Raid: #{raid.name} (#{raid.users_joined}/#{raid.raid_size})"
-        event << "Members joined: #{raid.users_signed}"
-        event << "Roles suggested: #{raid.suggested_roles}"
+        event << "Members joined:"
+        raid.users_signed.each do |user|
+          event << user
+        end
+        nil
       end
     rescue
       @error_message
