@@ -14,8 +14,15 @@ module Messages
   end
 
   message(containing: /mo+d+s+/i) do |event|
+    pics = [
+      "https://cdn.discordapp.com/attachments/222920939598381060/236266183140048896/HorribleSubs_Amaama_to_Inazuma_-_08_720p.mkv_snapshot_13.36_2016.09.11_00.56.51.jpg",
+      "https://cdn.discordapp.com/attachments/222920939598381060/236234989501415424/HorribleSubs_Amaama_to_Inazuma_-_07_720p.mkv_snapshot_13.51_2016.09.09_02.33.07.jpg",
+      "https://cdn.discordapp.com/attachments/222920939598381060/236266391769055233/HorribleSubs_Amaama_to_Inazuma_-_06_720p.mkv_snapshot_06.11_2016.09.09_01.57.22.jpg",
+      "https://cdn.discordapp.com/attachments/222920939598381060/236266436111237120/HorribleSubs_Amaama_to_Inazuma_-_06_720p.mkv_snapshot_06.24_2016.09.09_01.57.49.jpg"
+    ]
+
     event.respond "MOOOODDS"
-    event.respond "https://cdn.discordapp.com/attachments/222920939598381060/236234989501415424/HorribleSubs_Amaama_to_Inazuma_-_07_720p.mkv_snapshot_13.51_2016.09.09_02.33.07.jpg"
+    event.respond Utilities.random_element(pics)
 
   end
 
