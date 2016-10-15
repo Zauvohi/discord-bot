@@ -70,4 +70,14 @@ module PictureCommands
   ) do |event|
     event.respond "https://cdn.discordapp.com/attachments/222920939598381060/223115777367212037/police.jpg"
   end
+
+  command(:miria,
+    chain_usable: false
+  ) do |event|
+    miria_pics = [
+      "https://cdn.discordapp.com/attachments/190607069093691393/236720577698725898/1476491639173.jpg",
+      "http://puu.sh/rJtiS/87a13de6ae.jpg"
+    ]
+    event.respond Utilities.random_element(miria_pics)
+  end
 end

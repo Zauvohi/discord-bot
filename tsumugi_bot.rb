@@ -18,8 +18,4 @@ bot.command(:superspecial, chain_usable: false) do |event|
   event.respond "https://www.youtube.com/watch?v=TUmm1QjLC5U"
 end
 
-bot.command(:miria, chain_usable: false) do |event|
-  event.respond "http://puu.sh/rJtiS/87a13de6ae.jpg"
-end
-
 bot.run
