@@ -1,1 +1,1 @@
-worker: ruby ./triadprimus_bot.rb
+worker: ruby ./tsumugi_bot.rb

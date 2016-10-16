@@ -14,7 +14,7 @@ class RaidSignup
   end
 
   def suggested_roles
-    @suggested_roles.join(" ")
+    @suggested_roles
   end
 
   def is_assigned(user)
@@ -22,13 +22,14 @@ class RaidSignup
       return true if (key === user)
     end
     return false
+
   end
 
   def add(user, role)
     if (self.is_assigned(user) === false)
       @users[user] = role
     else
-      return false
+      false
     end
   end
 
@@ -52,9 +53,9 @@ class RaidSignup
   def users_signed
     users = []
     @users.each do |user, role|
-      users.push("#{user} as #{role}")
+      users.push("#{role} - #{user}")
     end
 
-    users.join(' ')
+    users
   end
 end
