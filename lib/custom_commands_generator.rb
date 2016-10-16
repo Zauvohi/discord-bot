@@ -16,7 +16,7 @@ class CustomCommandGenerator
     log_path = DIR_LOCATION + 'log.txt'
 
     unless File.exists?(log_path)
-      File.new(log_path, 'w') { |f| f << "logger:" }
+      File.open(log_path, 'w') { |f| f << "logger:" }
     end
 
     File.open(log_path, 'w') do |f|
@@ -25,6 +25,12 @@ class CustomCommandGenerator
   end
 
   def self.load_json
+    commands_path = DIR_LOCATION + 'commands.json'
+
+    unless File.exists?(commands_path)
+      File.open(commands_path, 'w') { |f| f << "{\n\n}" }
+    end
+
     file = File.read(File.join(DIR_LOCATION, 'commands.json'))
     JSON.parse(file)
   end

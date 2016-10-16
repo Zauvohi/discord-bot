@@ -3,28 +3,24 @@ module PictureCommands
   require_relative 'utilities'
 
   bucket :pics, limit: 5, time_span: 10, delay: 2
-  @limit_message = "pls stop ;_;"
 
   command(:stick,
     chain_usable: false,
-    bucket: :pics,
-    rate_limit_message: @limit_message
+    bucket: :pics
   ) do |event|
     event.respond "https://cdn.discordapp.com/attachments/190607069093691393/222907225809747968/a_fucking_stick_lamo.png"
   end
 
   command(:otsu,
     chain_usable: false,
-    bucket: :pics,
-    rate_limit_message: @limit_message
+    bucket: :pics
   ) do |event|
     event.respond "https://cdn.discordapp.com/attachments/222920939598381060/223097379279208449/8KzSio.png"
   end
 
   command(:snek,
     chain_usable: false,
-    bucket: :pics,
-    rate_limit_message: @limit_message
+    bucket: :pics
   ) do |event|
     snek_pics = [
       "https://cdn.discordapp.com/attachments/222920939598381060/223110760073527307/1472435078016.jpg",
@@ -43,23 +39,22 @@ module PictureCommands
 
   command(:windmeme,
     chain_usable: false,
-    bucket: :pics,
-    rate_limit_message: @limit_message
+    bucket: :pics
   ) do |event|
     wind_pics = [
       "https://cdn.discordapp.com/attachments/222920939598381060/223112000249528321/windmeme2.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223112027575549953/windmeme3.png",
       "https://cdn.discordapp.com/attachments/222920939598381060/223111938463367168/1465766595855.jpg",
       "https://cdn.discordapp.com/attachments/222920939598381060/223112048224108545/wind_memers.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223116810612899840/1466962326898.jpg"
+      "https://cdn.discordapp.com/attachments/222920939598381060/223116810612899840/1466962326898.jpg",
+      "https://cdn.discordapp.com/attachments/190607069093691393/232585721163153408/windmemes6.jpg"
     ]
     event.respond Utilities.random_element(wind_pics)
   end
 
   command(:sen,
     chain_usable: false,
-    bucket: :pics,
-    rate_limit_message: @limit_message
+    bucket: :pics
   ) do |event|
     sen_pics = [
       "https://cdn.discordapp.com/attachments/222920939598381060/223117869427195904/1470513276648.jpg",
@@ -71,9 +66,18 @@ module PictureCommands
 
   command(:police,
     chain_usable: false,
-    bucket: :pics,
-    rate_limit_message: @limit_message
+    bucket: :pics
   ) do |event|
     event.respond "https://cdn.discordapp.com/attachments/222920939598381060/223115777367212037/police.jpg"
+  end
+
+  command(:miria,
+    chain_usable: false
+  ) do |event|
+    miria_pics = [
+      "https://cdn.discordapp.com/attachments/190607069093691393/236720577698725898/1476491639173.jpg",
+      "http://puu.sh/rJtiS/87a13de6ae.jpg"
+    ]
+    event.respond Utilities.random_element(miria_pics)
   end
 end

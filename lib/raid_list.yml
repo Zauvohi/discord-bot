@@ -1,4 +1,7 @@
 rose_queen:
+  aliases:
+    rq
+    jk
   roles:
     df(ar3)
     ss(blind)
@@ -8,6 +11,9 @@ rose_queen:
     he(break)
 
 macula_marius:
+  aliases:
+    macula
+    marcula
   roles:
     df(ar3)
     ss(charm)
@@ -17,6 +23,7 @@ macula_marius:
     bs(clear)
 
 medusa:
+  aliases:
   roles:
     df(ar3)
     ss(charm)
@@ -26,6 +33,7 @@ medusa:
     bs(clear)
 
 apollo:
+  aliases:
   roles:
     df(ar3)
     ss(charm)
@@ -35,6 +43,15 @@ apollo:
     bs(free)
 
 dark_angel_olivia:
+  aliases:
+    dao
+    dark_angel
+    olivia
+    dolivia
+    dangel
+    d.angel
+    dick_angel
+    dick_angel_olivia
   roles:
     df(ar3)
     ss(charm)
@@ -44,6 +61,15 @@ dark_angel_olivia:
     bs(free)
 
 proto_bahamut:
+  aliases:
+    pbaha
+    p_baha
+    proto_baha
+    protobaha
+    fried_chicken
+    chicken
+    proto_lizard
+    lizard
   roles:
     df(blind)
     df(blind)
@@ -65,10 +91,28 @@ proto_bahamut:
     he(break)
 
 nataku:
+  aliases:
+    nezha
   roles:
-    Free(free)
-    Free(free)
-    Free(free)
-    Free(free)
-    Free(free)
-    Free(free)
+    ss(charm)
+    df(ar3)
+    hs(di3)
+    bs(clear)
+    hs(blind)
+    free
+
+flam_glass:
+  aliases:
+    fg
+    flam=glass
+    twin_elements
+    flammglass
+    flamglass
+    flamm_glass
+  roles:
+    hs
+    hs
+    ss
+    df(dirt)
+    df(water)
+    bs
