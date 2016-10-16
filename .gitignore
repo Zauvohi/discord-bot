@@ -1,2 +1,4 @@
 config/config.rb
 .env
+lib/commands/log.txt
+lib/commands/commands.json

@@ -3,13 +3,18 @@ A small discord bot using [discordrb](https://github.com/meew0/discordrb/).
 
 ## List of current commands and filters
 The commands have a "!" prefix.
-* stick (sends a picture of beatrix making fun of stick users)
-* otsu (sends the ostukare sticker)
-* police (sends a picture of the grandcypher police)
-* Random pic commands
-  * sen (sends a random Sen picture)
-  * windmeme (sends a random windememe releated picture)
-  * snek (sends a laughing snek, there's a rare chance to get a dagger!)
+* Custom commands
+  * Custom commands pretty much replace the need for picture commands, here how you add a custom command:
+    ```
+      !add_command trigger type url
+    ```
+    An example would be:
+    ```
+      !add_command stick img url_to_picture
+    ```
+
+    This information is stored in a JSON file located in /commands
+
 * Raid making commands
   * create raid_name
     * Creates a raid. Example: !create apollo
@@ -32,6 +37,3 @@ The commands have a "!" prefix.
   * Twitter integration to fetch the Angel Halo hours.
   * Add alias to raids (Dark Angel Oliva is often called DAO o DAOlivia).
   * Limit the dumb clarise posting.
-  * Increase the bucket size for picture triggers (and maybe removing the error messages when the bucket limit is reached).
-  * Add user-made picture/link triggers.
-  * Sort and load pictures from directories. Example: Having a directory for windmeme pictures so whenever !windeme is fired, it will send a picture from that directory instead of having the URLs hardcoded.
