@@ -6,7 +6,7 @@ require_relative './lib/custom_commands_generator'
 require_relative './lib/custom_commands'
 Dotenv.load
 
-bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], application_id: ENV['APPID'], prefix: '!'
+bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], client_id: ENV['APPID'], prefix: '!'
 bot.include! RaidCommands
 bot.include! Messages
 
