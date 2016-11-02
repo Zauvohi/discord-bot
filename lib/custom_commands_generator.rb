@@ -12,7 +12,7 @@ class CustomCommandGenerator
     @user = user
   end
 
-  def log_command
+  def log_command(action)
     log_path = DIR_LOCATION + 'log.txt'
 
     unless File.exists?(log_path)
@@ -20,7 +20,7 @@ class CustomCommandGenerator
     end
 
     File.open(log_path, 'w') do |f|
-      f << "User: #{@user} added #{@trigger} (type: #{@type}, url: #{@url})"
+      f << "User: #{@user} #{action}ed #{@trigger} (type: #{@type}, url: #{@url})"
     end
   end
 
@@ -58,7 +58,15 @@ class CustomCommandGenerator
     File.open(File.join(__dir__, '/commands/commands.json'), 'w') do |f|
       f.write(JSON.pretty_generate(@commands_list))
     end
-    log_command
+    log_command("add")
+  end
+
+  def delete_command(command)
+    @commands_list.delete(command)
+    File.open(File.join(__dir__, '/commands/commands.json'), 'w') do |f|
+      f.write(JSON.pretty_generate(@commands_list))
+    end
+    log_command("delet")
   end
 
   def add
@@ -78,6 +86,17 @@ class CustomCommandGenerator
       msg << "updated"
     else
       msg = "This url was already added."
+    end
+    msg
+  end
+
+  def delete
+    msg = "command #{@trigger} was deleted"
+
+    if new_command?(@trigger)
+      msg = "this command doesn't exist."
+    else
+      delete_command(@trigger)
     end
     msg
   end

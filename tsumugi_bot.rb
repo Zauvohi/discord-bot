@@ -14,7 +14,7 @@ custom_commands = CustomCommandGenerator.load_commands(CustomCommands)
 bot.include! custom_commands
 
 bot.command(:add_command,
-            chain_usable: false,
+            chain_usable: true,
             description: "Adds or updates a custom command. Usage: !add_command trigger type url. Example: !add_command stick img url_to_picture. Please keep it clean and SFW."
             ) do |event, *args|
 
@@ -31,6 +31,25 @@ bot.command(:add_command,
   else
     event.respond "Missing arguments. Check !help add_command for more info."
   end
+end
+
+bot.command(:update_command,
+            chain_usable: false,
+            description: "Updates a command.") do |event, *args|
+
+  bot.execute_command(:add_command, event, args, chained: true)
+end
+
+bot.command(:delete_command,
+            chain_usable: false,
+            description: "Deletes a command.") do |event, trigger|
+
+  command = CustomCommandGenerator.new(trigger, "", "", event.user.name)
+  message = command.delete
+  updated_commands = CustomCommandGenerator.load_commands(CustomCommands)
+  bot.include! updated_commands
+  bot.remove_command(trigger.to_sym)
+  event.respond "#{message}"
 end
 
 bot.run
