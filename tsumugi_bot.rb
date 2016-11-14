@@ -4,11 +4,13 @@ require_relative './lib/raid_commands'
 require_relative './lib/messages'
 require_relative './lib/custom_commands_generator'
 require_relative './lib/custom_commands'
+require_relative './lib/waifu_rating'
 Dotenv.load
 
 bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], client_id: ENV['APPID'], prefix: '!'
 bot.include! RaidCommands
 bot.include! Messages
+bot.include! WaifuRating
 
 custom_commands = CustomCommandGenerator.load_commands(CustomCommands)
 bot.include! custom_commands
