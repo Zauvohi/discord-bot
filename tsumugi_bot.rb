@@ -37,14 +37,14 @@ end
 
 bot.command(:update_command,
             chain_usable: false,
-            description: "Updates a command.") do |event, *args|
+            description: "Updates a command. Usage: Same way you'd use add_command") do |event, *args|
 
   bot.execute_command(:add_command, event, args, chained: true)
 end
 
 bot.command(:delete_command,
             chain_usable: false,
-            description: "Deletes a command.") do |event, trigger|
+            description: "Deletes a command. Usage: !delete_command trigger_to_be_deleted") do |event, trigger|
 
   command = CustomCommandGenerator.new(trigger, "", "", event.user.name)
   message = command.delete

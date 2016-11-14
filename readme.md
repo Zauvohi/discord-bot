@@ -15,6 +15,17 @@ The commands have a "!" prefix.
 
     This information is stored in a JSON file located in /commands
 
+  * update_command
+    * This basically does what trying to add a picture to an existing command with add_command, so it's an alias for it but it only updates commands.
+
+  * delete_command
+    * This deletes a given command, here's how you would use it:
+    ```
+      !delete_command stick
+    ```
+
+      It returns a confirmation message.
+
 * Raid making commands
   * create raid_name (or alias)
     * Creates a raid. Example: !create apollo

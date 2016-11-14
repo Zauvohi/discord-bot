@@ -6,7 +6,7 @@ module WaifuRating
     "your waifu is trash lamo",
     ":poop:",
     "literally garbage",
-    "tfw this guy has shittaste",
+    "tfw this guy has shit taste",
     "at least it's not Mio"
   ]
 
@@ -24,7 +24,7 @@ module WaifuRating
   @ten_comments = [
     ":weary: :ok_hand:",
     ":100: :100: :100: :100: :ok_hand:",
-    "based"
+    "based taste"
   ]
 
   @sacred_waifus = [
@@ -72,6 +72,8 @@ module WaifuRating
       msg += Utilities.random_element(@harsh_comments)
     elsif /mio|honda mio/i.match(waifu) != nil
       msg = ">waifuing mio \n pls :boot:"
+    elsif /tsumugi/i.match(waifu) != nil
+      msg = "I'm the cutest! :relaxed:"
     else
       msg += Utilities.random_element(@trash_comments)
     end
