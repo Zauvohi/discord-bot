@@ -49,7 +49,7 @@ module WaifuRating
     "Anira",
     "Tamamo no mae",
     "Tamamo",
-    "Casko"
+    "Casko",
     "Elizabeth Bathory",
     "Elizabeth",
     "Liz"
