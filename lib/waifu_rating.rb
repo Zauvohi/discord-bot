@@ -64,16 +64,14 @@ module WaifuRating
   end
 
   command(:ratewaifu, chain_usable:  false) do |event, *waifu|
-    waifu = waifu.join(" ")
+    waifu = /me|myself/i != nil ? "you" : waifu.join(" ")
     score = self.is_sacred?(waifu) ? 11 : rand(10)
     msg = ":thinking: I would rate #{waifu}... #{score}/10 "
-    puts waifu
-    puts /mio|honda mio/i.match(waifu) != nil
-    puts /tsumugi|me|myself/i.match(waifu) != nil
+
 
     if /mio|honda mio/i.match(waifu) != nil
       msg = ">waifuing mio \n pls :boot:"
-    elsif /tsumugi|me|myself|you/i.match(waifu) != nil
+    elsif /tsumugi|you|yourself|this bot/i.match(waifu) != nil
       msg = "I'm the cutest! :relaxed:"
     elsif score >= 10
       msg += Utilities.random_element(@ten_comments)
