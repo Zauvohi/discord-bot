@@ -29,6 +29,7 @@ module WaifuRating
 
   @sacred_waifus = [
     "Korwa",
+    "Kurwa",
     "Sen",
     "Shibuya Rin",
     "Rin",
@@ -52,7 +53,9 @@ module WaifuRating
     "Casko",
     "Elizabeth Bathory",
     "Elizabeth",
-    "Liz"
+    "Liz",
+    "Futaba Anzu",
+    "Anzu"
   ]
 
   def self.is_sacred?(waifu)
@@ -60,20 +63,24 @@ module WaifuRating
     waifus_regex.match(waifu) != nil
   end
 
-  command(:ratewaifu, chain_usable:  false) do |event, waifu|
+  command(:ratewaifu, chain_usable:  false) do |event, *waifu|
+    waifu = waifu.join(" ")
     score = self.is_sacred?(waifu) ? 11 : rand(10)
     msg = ":thinking: I would rate #{waifu}... #{score}/10 "
+    puts waifu
+    puts /mio|honda mio/i.match(waifu) != nil
+    puts /tsumugi|me|myself/i.match(waifu) != nil
 
-    if score >= 10
+    if /mio|honda mio/i.match(waifu) != nil
+      msg = ">waifuing mio \n pls :boot:"
+    elsif /tsumugi|me|myself/i.match(waifu) != nil
+      msg = "I'm the cutest! :relaxed:"
+    elsif score >= 10
       msg += Utilities.random_element(@ten_comments)
     elsif score.between?(7, 9)
       msg += Utilities.random_element(@nice_comments)
     elsif score.between?(4, 6)
       msg += Utilities.random_element(@harsh_comments)
-    elsif /mio|honda mio/i.match(waifu) != nil
-      msg = ">waifuing mio \n pls :boot:"
-    elsif /tsumugi|me/i.match(waifu) != nil
-      msg = "I'm the cutest! :relaxed:"
     else
       msg += Utilities.random_element(@trash_comments)
     end
