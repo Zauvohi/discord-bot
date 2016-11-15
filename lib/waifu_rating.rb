@@ -73,7 +73,7 @@ module WaifuRating
 
     if /mio|honda mio/i.match(waifu) != nil
       msg = ">waifuing mio \n pls :boot:"
-    elsif /tsumugi|me|myself/i.match(waifu) != nil
+    elsif /tsumugi|me|myself|you/i.match(waifu) != nil
       msg = "I'm the cutest! :relaxed:"
     elsif score >= 10
       msg += Utilities.random_element(@ten_comments)
