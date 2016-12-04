@@ -19,14 +19,14 @@ class RaidSignup
 
   def is_assigned(user)
     @users.each do |key, value|
-      return true if (key === user)
+      return true if (key == user)
     end
     return false
 
   end
 
   def add(user, role)
-    if (self.is_assigned(user) === false)
+    if (self.is_assigned(user) == false)
       @users[user] = role
     else
       false
@@ -47,7 +47,7 @@ class RaidSignup
   end
 
   def is_full?
-    self.users_joined === self.raid_size
+    self.users_joined == self.raid_size
   end
 
   def users_signed

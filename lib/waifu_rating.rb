@@ -28,34 +28,34 @@ module WaifuRating
   ]
 
   @sacred_waifus = [
-    "Korwa",
-    "Kurwa",
-    "Sen",
-    "Shibuya Rin",
-    "Rin",
-    "Jougasaki Mika",
-    "Mika",
-    "Narumeia",
-    "Naru",
-    "Kanzaki Ranko",
-    "Ranko",
-    "Kamiya Nao",
-    "Nao",
-    "Hojo Karen",
-    "Karen",
-    "Monki",
-    "Andira",
-    "Anchira",
-    "Anila",
-    "Anira",
-    "Tamamo no mae",
-    "Tamamo",
-    "Casko",
-    "Elizabeth Bathory",
-    "Elizabeth",
-    "Liz",
-    "Futaba Anzu",
-    "Anzu"
+    'Korwa',
+    'Kurwa',
+    'Sen',
+    'Shibuya Rin',
+    'Rin',
+    'Jougasaki Mika',
+    'Mika',
+    'Narumeia',
+    'Naru',
+    'Kanzaki Ranko',
+    'Ranko',
+    'Kamiya Nao',
+    'Nao',
+    'Hojo Karen',
+    'Karen',
+    'Monki',
+    'Andira',
+    'Anchira',
+    'Anila',
+    'Anira',
+    'Tamamo no mae',
+    'Tamamo',
+    'Casko',
+    'Elizabeth Bathory',
+    'Elizabeth',
+    'Liz',
+    'Futaba Anzu',
+    'Anzu'
   ]
 
   def self.is_sacred?(waifu)
@@ -69,19 +69,18 @@ module WaifuRating
     score = self.is_sacred?(waifu) ? 11 : rand(10)
     msg = ":thinking: I would rate #{alt_waifu}... #{score}/10 "
 
-
-    if /mio|honda mio/i.match(waifu) != nil
+    if /mio|honda mio/i.match(waifu)
       msg = ">waifuing mio \n pls :boot:"
-    elsif /tsumugi|you|yourself|this bot/i.match(waifu) != nil
+    elsif /tsumugi|you|yourself|this bot/i.match(waifu)
       msg = "I'm the cutest! :relaxed:"
     elsif score >= 10
-      msg += Utilities.random_element(@ten_comments)
+      msg << Utilities.random_element(@ten_comments)
     elsif score.between?(7, 9)
-      msg += Utilities.random_element(@nice_comments)
+      msg << Utilities.random_element(@nice_comments)
     elsif score.between?(4, 6)
-      msg += Utilities.random_element(@harsh_comments)
+      msg << Utilities.random_element(@harsh_comments)
     else
-      msg += Utilities.random_element(@trash_comments)
+      msg << Utilities.random_element(@trash_comments)
     end
 
     event.respond msg
