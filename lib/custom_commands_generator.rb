@@ -12,18 +12,6 @@ class CustomCommandGenerator
     @user = user
   end
 
-  def log_command(action)
-    log_path = DIR_LOCATION + 'log.txt'
-
-    unless File.exists?(log_path)
-      File.open(log_path, 'w') { |f| f << "logger:" }
-    end
-
-    File.open(log_path, 'w') do |f|
-      f << "User: #{@user} #{action}ed #{@trigger} (type: #{@type}, url: #{@url})"
-    end
-  end
-
   def self.load_json
     commands_path = DIR_LOCATION + 'commands.json'
 
@@ -61,9 +49,7 @@ class CustomCommandGenerator
 
   def delete_command(command)
     @commands_list.delete(command)
-    File.open(File.join(__dir__, '/commands/commands.json'), 'w') do |f|
-      f.write(JSON.pretty_generate(@commands_list))
-    end
+    generate_json
     log_command("delet")
   end
 
@@ -118,6 +104,18 @@ class CustomCommandGenerator
   end
 
   private
+
+  def log_command(action)
+    log_path = DIR_LOCATION + 'log.txt'
+
+    unless File.exists?(log_path)
+      File.open(log_path, 'w') { |f| f << "logger:" }
+    end
+
+    File.open(log_path, 'w') do |f|
+      f << "User: #{@user} #{action}ed #{@trigger} (type: #{@type}, url: #{@url})"
+    end
+  end
 
   def generate_json
     File.open(File.join(__dir__, '/commands/commands.json'), 'w') do |f|
