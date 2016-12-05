@@ -54,7 +54,10 @@ bot.command(:delete_command,
   event.respond "#{message}"
 end
 
-bot.command(:list_contents, chain_usable: false, description: "") do |event, trigger|
+bot.command(:list_contents,
+            chain_usable: false,
+            description: "Lists a command's contents (URLs)") do |event, trigger|
+
   command = CustomCommandGenerator.new(trigger, "", "", "")
   message = "These are #{trigger} contents: \n"
 
@@ -62,7 +65,7 @@ bot.command(:list_contents, chain_usable: false, description: "") do |event, tri
     message << "#{index} - <#{item}> \n"
   end
 
-  message
+  event.user.pm(message)
 end
 
 bot.command(:remove_item,
