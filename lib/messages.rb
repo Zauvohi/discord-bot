@@ -1,6 +1,9 @@
 module Messages
   extend Discordrb::EventContainer
   require_relative 'utilities'
+  require 'net/http'
+  require 'tempfile'
+  require 'uri'
 
   message(containing: /dumb clar+i*(c+|s+)e+/) do |event|
     clarise_pics = [
@@ -33,9 +36,26 @@ module Messages
     elsif msg.include?(",")
       words = msg.split(",")
     else
-      words = ["yes", "no", "i dunno", "nope.", "lolno", "ye", "probably", "yes, but you have to kill HRT"]
+      words = ["yes", "no", "i dunno", "nope.", "lolno", "ye", "probably", "yes, but you have to bring back HRT"]
     end
 
     event.respond Utilities.random_element(words)
+  end
+
+  pm(containing: /change_avatar/) do |event|
+    url = event.message.content.sub("change_avatar", "").gsub(/\s+/, "")
+    uri = URI.parse("#{url}")
+    response = Net::HTTP.get_response(uri)
+    file = Tempfile.new(["avatar", ".jpg"], Dir.tmpdir)
+    file.binmode
+    file.write(response.body)
+    file.flush
+
+    event.bot.profile.avatar=(File.open(file, "r"))
+  end
+
+  pm(containing: /playing/) do |event|
+    game = event.message.content.sub("playing ", "")
+    event.bot.game=(game)
   end
 end
