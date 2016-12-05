@@ -54,4 +54,31 @@ bot.command(:delete_command,
   event.respond "#{message}"
 end
 
+bot.command(:list_contents, chain_usable: false, description: "") do |event, trigger|
+  command = CustomCommandGenerator.new(trigger, "", "", "")
+  message = "These are #{trigger} contents: \n"
+
+  command.list_contents.each_with_index do |item, index|
+    message << "#{index} - <#{item}> \n"
+  end
+
+  message
+end
+
+bot.command(:remove_item,
+            chain_usable: false,
+            description: "Deletes an item from a command. Usage: !remove_item command position") do |event, *args|
+
+  trigger = args[0]
+  position = args[1]
+  command = CustomCommandGenerator.new(trigger, "", "", "")
+
+  message = command.remove_item(position)
+
+  updated_commands = CustomCommandGenerator.load_commands(CustomCommands)
+  bot.include! updated_commands
+
+  event.respond "#{message}"
+end
+
 bot.run
