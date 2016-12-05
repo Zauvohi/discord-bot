@@ -84,4 +84,13 @@ bot.command(:remove_item,
   event.respond "#{message}"
 end
 
+bot.command(:backup_commands, chain_usable: false) do |event|
+  data = CustomCommandGenerator.get_json_contents
+  file =  File.open("backup.json", "w") { |f| f << data }
+
+  event.user.send_file(File.open(file, "r"))
+  File.delete(file)
+  nil
+end
+
 bot.run

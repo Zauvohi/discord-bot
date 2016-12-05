@@ -33,6 +33,10 @@ class CustomCommandGenerator
     container
   end
 
+  def self.get_json_contents
+    File.read(File.join(DIR_LOCATION, 'commands.json'))
+  end
+
   def new_command?(trigger)
     !@commands_list.has_key?(trigger)
   end
