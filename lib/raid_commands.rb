@@ -4,7 +4,7 @@ module RaidCommands
   require_relative 'raid_signup'
   require_relative 'utilities'
 
-  LIST_MAX_LENGHT = 2
+  LIST_MAX_LENGHT = 10
   @raid_details = YAML::load_file(File.join(__dir__, 'raid_list.yml'))
   @raid_list = {}
   @error_message = "My tummy hurts ;_;"
