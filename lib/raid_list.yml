@@ -124,11 +124,11 @@ gw_90:
     dogo90
     90
   roles:
-    Debuffs
-    DPS
-    DPS
-    DPS
-    DPS (HS or hound >dog)
+    debuffs
+    dps
+    dps
+    dps
+    dps/hs/hound
 
 gw_95:
   aliases:
@@ -137,11 +137,11 @@ gw_95:
     dogo95
     95
   roles:
-    Debuffs
-    DPS
-    DPS
-    DPS
-    DPS (HS or hound >dog)
+    debuffs
+    dps
+    dps
+    dps
+    dps/hs/hound
 
 gw_100:
   aliases:
@@ -150,8 +150,8 @@ gw_100:
     dogo100
     100
   roles:
-    Debuffs
-    DPS
-    DPS
-    DPS
-    DPS (HS or hound >dog)
+    debuffs
+    dps
+    dps
+    dps
+    dps/hs/hound
