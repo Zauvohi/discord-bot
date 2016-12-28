@@ -22,10 +22,10 @@ bot.command(:add_command,
 
   trigger = args[0]
   type = args[1]
-  url = args[2]
+  content = args[2..args.size - 1].join(" ")
 
-  unless args.size != 3
-    command = CustomCommandGenerator.new(trigger, type, url, event.user.name)
+  if args.size >= 3
+    command = CustomCommandGenerator.new(trigger, type, content, event.user.name)
     message = command.add
     new_commands = CustomCommandGenerator.load_commands(CustomCommands)
     bot.include! new_commands
