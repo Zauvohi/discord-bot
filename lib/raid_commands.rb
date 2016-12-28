@@ -68,11 +68,9 @@ module RaidCommands
     end
   end
 
-  command(:leave, chain_usable: false) do |event, *args|
+  command(:leave, chain_usable: false) do |event, code|
     begin
-      name = Utilities.underscore(args)
-      raid_name = Utilities.find_raid_name(name, @raid_details)
-      raid = @raid_list[raid_name]
+      raid = @raid_list[code]
 
       unless raid.unassign(event.user.name)
         event.respond "? You aren't even in that raid, bwaka!"
@@ -109,9 +107,9 @@ module RaidCommands
   end
 
   command(:finish, chain_usable: false) do |event|
-    @raid_list.each do |name, raid|
+    @raid_list.each do |code, raid|
       if (raid.creator === event.user.name)
-        @raid_list.delete(name)
+        @raid_list.delete(code)
         event.respond "https://my.mixtape.moe/tuoksd.png"
       end
     end
