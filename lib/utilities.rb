@@ -30,4 +30,8 @@ module Utilities
 
     actual_name
   end
+
+  def generate_code(lenght)
+    ('a'..'z').to_a.shuffle[0,lenght].join.upcase
+  end
 end

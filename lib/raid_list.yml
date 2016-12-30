@@ -116,3 +116,42 @@ flam_glass:
     df(dirt)
     df(water)
     bs
+
+gw_90:
+  aliases:
+    gw90
+    dog90
+    dogo90
+    90
+  roles:
+    debuffs
+    dps
+    dps
+    dps
+    dps/hs/hound
+
+gw_95:
+  aliases:
+    gw95
+    dog95
+    dogo95
+    95
+  roles:
+    debuffs
+    dps
+    dps
+    dps
+    dps/hs/hound
+
+gw_100:
+  aliases:
+    gw100
+    dog100
+    dogo100
+    100
+  roles:
+    debuffs
+    dps
+    dps
+    dps
+    dps/hs/hound
