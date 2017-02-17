@@ -3,6 +3,8 @@ module BaseCommands
   require 'net/http'
   require 'tempfile'
   require 'uri'
+  require 'dotenv'
+  Dotenv.load
 
   command(:add_command,
           chain_usable: true,
@@ -86,6 +88,8 @@ module BaseCommands
           chain_usable: false,
           description: "Changes the bot's avatar.") do |event, url|
 
+    user_id = event.author.discriminator
+    return nil if user_id != ENV['ADMINID']
     url = url.gsub(/\s+/, "")
     uri = URI.parse("#{url}")
     response = Net::HTTP.get_response(uri)
@@ -102,6 +106,8 @@ module BaseCommands
           chain_usable: false,
           description: "Changes the game the bot is playing.") do |event, *game|
 
+    user_id = event.author.discriminator
+    return nil if user_id != ENV['ADMINID']
     event.bot.game=(game.join(" "))
     nil
   end

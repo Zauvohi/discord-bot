@@ -26,22 +26,35 @@ The commands have a "!" prefix.
 
       It returns a confirmation message.
 
+  * list_contents
+    * This command sends back a list with the contents of a given command in the order they were added with a 0-based index. The contents are wrapped between < > to avoid links from previewing.
+
+  * remove_item
+    * This command is used to remove an item in a command by its position with a 0-based index.
+
+  * change_avatar
+    * This command is used to change the bot's avatar providing an URL with the avatar desired. Only the user designated as the admin/owner of the bot can use this command.
+
+  * playing
+    * This command changes the "playing" status of the bot but providing a string after the command. Only the user designated as the admin/owner of the bot can use this command.
+
 * Raid making commands
   * create raid_name (or alias)
     * Creates a raid. Example: !create apollo
-    * Creates a raid using an alias, like Dark Angel Olivia: !create dao
-  * join raid_name class
-    * Joins a raid as a certain class, EX skills are optional. Example: !join apollo DF(AR3)
-  * leave raid_name
-    * leaves a raid. Example: !leave apollo
-* check raid_name (optional)
+    * Creates a raid using an alias, like Dark Angel Olivia: !create dao. This will generate a 3 letter code used to join.
+  * join raid_code class
+    * Joins a raid as a certain class, EX skills are optional. Example: !join AGF DF(AR3)
+  * leave raid_code
+    * leaves a raid. Example: !leave AGF
+* check raid_code (optional)
   * Check a raid status (members joined and their roles and suggested roles) if given a raid name, otherwise it'll list all the raids and how many people joined.
-    * Example: !check apollo
-      * Raid: Apollo (1/6) Members joined: sied as HE(TH3) Roles suggested:
-      * DF(AR3) SS(CHARM) HS(DI3) HS(BLIND) BS(CLEAR) BS(FREE)
+    * Example: !check AGF
+      Raid: Apollo by admin (1/6)
+        Members joined:
+          admin as HE(TH3)
     * Example: !check
-      * Raid: Apollo - Joined: 1/6
-      * Raid: Rose Queen - Joined: 0/6
+      * Raid: Apollo (AGF) - Joined: 1/6
+      * Raid: Rose Queen  (BVC)- Joined: 0/6
 * finsh ends a the raid the user created and sends a otsu sticker.
 
 All these commmands work with aliases.
@@ -53,7 +66,7 @@ All these commmands work with aliases.
 
   If you want to use this bot, you'll need to install all the depedencies for [discordrb](https://github.com/meew0/discordrb).
 
-  Once you're done, go [here](https://discordapp.com/developers/applications/me) to create a discord app/bot account and write down the token and application ID, then open example.env, replace the example values in TOKKEN and APPID and rename the file to just ".env".
+  Once you're done, go [here](https://discordapp.com/developers/applications/me) to create a discord app/bot account and write down the token and application ID, then open example.env, replace the example values in TOKEN, APPID and ADMINID (this is the number after the pound sign (#) when you click on your name in discord, example: admin#xxxx, where xxxx is the ID we're looking for) then rename the file to just ".env" and place is in the root directory.
 
   Then just run the bot like:
   ```
@@ -68,5 +81,4 @@ All these commmands work with aliases.
   Congrats, your bot is ready to spam your chat with memes.
 
 ## TODO:
-  * Twitter integration to fetch the Angel Halo hours.
-  * Find a way to have separate instances of the bot on different chats without clashing with each other.
+  * Find a way to fetch the lastest news and make the bot check for news in intervals on a given day.

@@ -110,7 +110,7 @@ module RaidCommands
     @raid_list.each do |code, raid|
       if (raid.creator === event.user.name)
         @raid_list.delete(code)
-        event.respond "https://my.mixtape.moe/tuoksd.png"
+        event.respond "http://i.imgur.com/Uor0pzy.png"
       end
     end
     nil
