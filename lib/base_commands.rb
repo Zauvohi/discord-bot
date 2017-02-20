@@ -4,7 +4,11 @@ module BaseCommands
   require 'tempfile'
   require 'uri'
   require 'dotenv'
+  require 'nokogiri'
+
   Dotenv.load
+
+  bucket :news, limit: 3, time_span: 180, delay: 10
 
   command(:add_command,
           chain_usable: true,
@@ -110,5 +114,25 @@ module BaseCommands
     return nil if user_id != ENV['ADMINID']
     event.bot.game=(game.join(" "))
     nil
+  end
+
+  command(:news,
+          chain_usable: false,
+          bucket: :news,
+          description: "Lastest news from the official website.") do |event|
+
+    site = 'http://www.granbluefantasy.jp/news/index.php'
+    page = Net::HTTP.get_response(URI.parse("#{site}"))
+    parsed_page = Nokogiri::HTML(page.body)
+
+    info = {}
+    post = parsed_page.css('article').first
+    info[:title] = post.css('.change_news_trigger').text
+    info[:link] = post.css('.change_news_trigger').attribute('href').value
+    info[:date] = post.css('.date').children.first.text
+
+    event << "Lastest news: #{info[:title]}"
+    event << "Date: #{info[:date]}"
+    event << "Link: #{info[:link]}"
   end
 end
