@@ -4,7 +4,7 @@ module BaseCommands
   require 'tempfile'
   require 'uri'
   require 'dotenv'
-  require 'nokogiri'
+  require_relative 'news_scraper'
 
   Dotenv.load
 
@@ -121,18 +121,9 @@ module BaseCommands
           bucket: :news,
           description: "Lastest news from the official website.") do |event|
 
-    site = 'http://www.granbluefantasy.jp/news/index.php'
-    page = Net::HTTP.get_response(URI.parse("#{site}"))
-    parsed_page = Nokogiri::HTML(page.body)
+    post = NewsScraper.new
+    post.update
 
-    info = {}
-    post = parsed_page.css('article').first
-    info[:title] = post.css('.change_news_trigger').text
-    info[:link] = post.css('.change_news_trigger').attribute('href').value
-    info[:date] = post.css('.date').children.first.text
-
-    event << "Lastest news: #{info[:title]}"
-    event << "Date: #{info[:date]}"
-    event << "Link: #{info[:link]}"
+    event.respond "#{post.lastest}"
   end
 end
