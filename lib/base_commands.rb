@@ -4,11 +4,14 @@ module BaseCommands
   require 'tempfile'
   require 'uri'
   require 'dotenv'
+  require 'rufus-scheduler'
   require_relative 'news_scraper'
 
   Dotenv.load
 
   bucket :news, limit: 3, time_span: 180, delay: 10
+  @scheduler = Rufus::Scheduler.new
+  @news_channels = []
 
   command(:add_command,
           chain_usable: true,
@@ -119,11 +122,55 @@ module BaseCommands
   command(:news,
           chain_usable: false,
           bucket: :news,
-          description: "Lastest news from the official website.") do |event|
+          description: "Lastest news from the official website.") do |event, *args|
 
+    bot = event.bot
+    channel_id = event.channel.id
     post = NewsScraper.new
+
     post.update
 
-    event.respond "#{post.lastest}"
+    if args.empty?
+      event.respond "#{post.lastest}"
+    elsif args.scan(/subscribe/).size > 0
+      @news_channels.push(channel_id)
+      even.respond "Channel subscribed for news."
+    else
+      interval = args[0]
+      stop_at = args[1] || "1h"
+
+      if @scheduler.jobs(tag: 'scraper').size > 0
+        scheduled_job = @scheduler.jobs(tags: 'scraper')[0]
+        original_interval = scheduled_job.original
+        original_stop_at = scheduled_job.opts[:last_in]
+        seconds = scheduled_job.next_time.seconds
+        next_time = Time.at(seconds).min - Time.now.min
+
+        return event.respond %Q(
+          There's a job already queued.
+          Every: #{original_interval} For: #{original_stop_at}
+          Next check in: #{next_time}m
+        )
+      else
+        bot.send_temporary_message(channel_id,"In queue, every: #{interval} for: #{stop_at}", 30)
+        @news_channels.push(channel_id) unless @news_channels.include?(channel_id)
+
+        @scheduler.every "#{interval}", last_in: stop_at, tag: 'scraper' do |job|
+          p = post.get_news
+
+          if post.is_recent?(p)
+            post.info = p
+            job.unschedule
+            @news_channels.each do |channel|
+              bot.send_message(channel, post.lastest)
+            end
+          else
+            bot.send_temporary_message(channel_id, "No news.", 30)
+          end
+        end
+      end
+
+      nil
+    end
   end
 end
