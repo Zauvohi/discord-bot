@@ -171,8 +171,6 @@ module BaseCommands
             @news_channels.each do |channel|
               bot.send_message(channel, post.lastest)
             end
-          else
-            bot.send_temporary_message(channel_id, "No news.", 30)
           end
         end
       end
