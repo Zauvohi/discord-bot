@@ -132,9 +132,16 @@ module BaseCommands
 
     if args.empty?
       event.respond "#{post.lastest}"
-    elsif args.scan(/subscribe/).size > 0
+    elsif args.include?('subscribe')
       @news_channels.push(channel_id)
-      even.respond "Channel subscribed for news."
+      event.respond "Channel subscribed for news."
+    elsif args.include?('unsubscribe')
+      @news_channels.slice!(@news_channels.index(channel_id))
+      event.respond "Channel unsubscribed for news."
+    elsif args.include?('cancel')
+      current_job = @scheduler.jobs(tags: 'scraper')[0]
+      @scheduler.unschedule(current_job)
+      event.respond "News checker has been cancelled."
     else
       interval = args[0]
       stop_at = args[1] || "1h"
@@ -152,8 +159,8 @@ module BaseCommands
           Next check in: #{next_time}m
         )
       else
-        bot.send_temporary_message(channel_id,"In queue, every: #{interval} for: #{stop_at}", 30)
         @news_channels.push(channel_id) unless @news_channels.include?(channel_id)
+        bot.send_temporary_message(channel_id,"In queue, every: #{interval} for: #{stop_at}", 30)
 
         @scheduler.every "#{interval}", last_in: stop_at, tag: 'scraper' do |job|
           p = post.get_news
