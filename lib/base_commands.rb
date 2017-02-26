@@ -26,7 +26,7 @@ module BaseCommands
       command = CustomCommandGenerator.new(trigger, type, content, event.user.name)
       message = command.add
       new_commands = CustomCommandGenerator.load_commands(CustomCommands)
-      bot.include! new_commands
+      event.bot.include! new_commands
       event.respond "#{message}"
     else
       event.respond "Missing arguments. Check !help add_command for more info."
@@ -37,12 +37,14 @@ module BaseCommands
           chain_usable: false,
           description: "Updates a command. Usage: Same way you'd use add_command") do |event, *args|
 
-    bot.execute_command(:add_command, event, args, chained: true)
+    event.bot.execute_command(:add_command, event, args, chained: true)
   end
 
   command(:delete_command,
           chain_usable: false,
           description: "Deletes a command. Usage: !delete_command trigger_to_be_deleted") do |event, trigger|
+
+    bot = event.bot
 
     command = CustomCommandGenerator.new(trigger, "", "", event.user.name)
     message = command.delete
@@ -77,7 +79,7 @@ module BaseCommands
     message = command.remove_item(position)
 
     updated_commands = CustomCommandGenerator.load_commands(CustomCommands)
-    bot.include! updated_commands
+    event.bot.include! updated_commands
 
     event.respond "#{message}"
   end
