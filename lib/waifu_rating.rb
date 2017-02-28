@@ -55,7 +55,17 @@ module WaifuRating
     'Elizabeth',
     'Liz',
     'Futaba Anzu',
-    'Anzu'
+    'Anzu',
+    'Danua',
+    'Orchid',
+    'Orchis',
+    'Shoebill',
+    'Bea',
+    'Beatrix',
+    'Yuisis',
+    'Anthuria',
+    'Yuel',
+    'Sochie'
   ]
 
   def self.is_sacred?(waifu)
