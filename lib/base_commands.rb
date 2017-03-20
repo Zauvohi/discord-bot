@@ -6,12 +6,14 @@ module BaseCommands
   require 'dotenv'
   require 'rufus-scheduler'
   require_relative 'news_scraper'
+  require_relative 'bans'
 
   Dotenv.load
 
   bucket :news, limit: 3, time_span: 180, delay: 10
   @scheduler = Rufus::Scheduler.new
   @news_channels = []
+  @ban_list = Bans.new
 
   command(:add_command,
           chain_usable: true,
@@ -109,6 +111,21 @@ module BaseCommands
 
     event.bot.profile.avatar=(File.open(file, "r"))
     nil
+  end
+
+  command(:ban, chain_usable: false, description: "Bans an user from using the bots. Usage: !ban user_id, mode. It can be total or partial.") do |event, *args|
+    return nil if event.author.discriminator != ENV['ADMINID']
+
+    user_id args[0].delete("#")
+    level = args[1]
+    @ban_list.add(user_id, level)
+  end
+
+  command(:remove_ban, chain_usable:false, description: "Removes a banned user from the list. Usage: !remove_ban user_id") do |event, *args|
+    return nil if event.author.discriminator != ENV['ADMINID']
+
+    user_id = args[0]
+    @ban_list.delete(user_id)
   end
 
   command(:playing,
