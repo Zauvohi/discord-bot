@@ -21,6 +21,10 @@ class Bans
     !@ban_list.has_key?(user_id)
   end
 
+  def user_banned?(user_id)
+    @ban_list.has_key?(user_id)
+  end
+
   def add(user_id, level)
     msg = ''
 
@@ -44,7 +48,7 @@ class Bans
       @ban_list.delete(user_id)
       msg = "User removed from list."
     end
-    
+
     generate_json
     msg
   end

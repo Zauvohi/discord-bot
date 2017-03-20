@@ -113,7 +113,10 @@ module BaseCommands
     nil
   end
 
-  command(:ban, chain_usable: false, description: "Bans an user from using the bots. Usage: !ban user_id, mode. It can be total or partial.") do |event, *args|
+  command(:ban,
+          chain_usable: false,
+          description: "Bans an user from using the bots. Usage: !ban user_id, mode. It can be total or partial.") do |event, *args|
+
     return nil if event.author.discriminator != ENV['ADMINID']
 
     user_id args[0].delete("#")
@@ -121,7 +124,10 @@ module BaseCommands
     @ban_list.add(user_id, level)
   end
 
-  command(:remove_ban, chain_usable:false, description: "Removes a banned user from the list. Usage: !remove_ban user_id") do |event, *args|
+  command(:remove_ban,
+          chain_usable:false,
+          description: "Removes a banned user from the list. Usage: !remove_ban user_id") do |event, *args|
+
     return nil if event.author.discriminator != ENV['ADMINID']
 
     user_id = args[0]
