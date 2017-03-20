@@ -3,13 +3,13 @@ require 'json'
 class Bans
 
   def initialize
-    @ban_list = self.load_json
+    @ban_list = Bans.load_json
   end
 
   def self.load_json
     ban_list_path = "#{__dir__}/ban_list.json"
 
-    unless File.exists?(ban_list_file)
+    unless File.exists?(ban_list_path)
       File.open(ban_list_path, 'w') { |f| f << "{\n\n}" }
     end
 

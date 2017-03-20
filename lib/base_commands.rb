@@ -20,6 +20,8 @@ module BaseCommands
           description: "Adds or updates a custom command. Usage: !add_command trigger type url. Example: !add_command stick img url_to_picture. Please keep it clean and SFW."
           ) do |event, *args|
 
+    return nil if @ban_list.user_banned?(event.author.discriminator)
+    return nil if @ban_list.user_banned?(event.author.discriminator)
     trigger = args[0]
     type = args[1]
     content = args[2..args.size - 1].join(" ")
@@ -39,6 +41,7 @@ module BaseCommands
           chain_usable: false,
           description: "Updates a command. Usage: Same way you'd use add_command") do |event, *args|
 
+    return nil if @ban_list.user_banned?(event.author.discriminator)
     event.bot.execute_command(:add_command, event, args, chained: true)
   end
 
@@ -46,6 +49,7 @@ module BaseCommands
           chain_usable: false,
           description: "Deletes a command. Usage: !delete_command trigger_to_be_deleted") do |event, trigger|
 
+    return nil if @ban_list.user_banned?(event.author.discriminator)
     bot = event.bot
 
     command = CustomCommandGenerator.new(trigger, "", "", event.user.name)
@@ -74,6 +78,7 @@ module BaseCommands
           chain_usable: false,
           description: "Deletes an item from a command. Usage: !remove_item command position") do |event, *args|
 
+    return nil if @ban_list.user_banned?(event.author.discriminator)
     trigger = args[0]
     position = args[1]
     command = CustomCommandGenerator.new(trigger, "", "", "")
@@ -87,6 +92,7 @@ module BaseCommands
   end
 
   command(:backup_commands, chain_usable: false) do |event|
+    return nil if @ban_list.user_banned?(event.author.discriminator)
     data = CustomCommandGenerator.get_json_contents
     file =  File.open("backup.json", "w") { |f| f << data }
 
@@ -119,7 +125,7 @@ module BaseCommands
 
     return nil if event.author.discriminator != ENV['ADMINID']
 
-    user_id args[0].delete("#")
+    user_id = args[0].delete("#")
     level = args[1]
     @ban_list.add(user_id, level)
   end
@@ -147,8 +153,9 @@ module BaseCommands
   command(:news,
           chain_usable: false,
           bucket: :news,
-          description: "Lastest news from the official website.") do |event, *args|
+          description: "Lastest news from the official website. Example: !news 5m 5h . This will lurk the news page every 5 minutes for 5 hours. If the time params are ommitted, it'll bring the lastests news from the site.") do |event, *args|
 
+    return nil if @ban_list.user_banned?(event.author.discriminator)
     bot = event.bot
     channel_id = event.channel.id
     post = NewsScraper.new

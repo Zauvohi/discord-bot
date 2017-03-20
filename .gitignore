@@ -1,3 +1,4 @@
 .env
 lib/commands/log.txt
 lib/commands/commands.json
+lib/ban_list.json
