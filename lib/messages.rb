@@ -22,7 +22,7 @@ module Messages
     nil unless msg.split(" ").size >= 3
 
     if (/\sor\s/ =~ msg) != nil
-      msg = msg.split("or")
+      msg = msg.split("\sor\s")
       msg.each do |element|
         if element.include?(",")
           words.concat(element.split(","))
