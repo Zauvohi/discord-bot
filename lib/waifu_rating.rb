@@ -7,24 +7,39 @@ module WaifuRating
     ":poop:",
     "literally garbage",
     "tfw this guy has shit taste",
-    "at least it's not Mio"
+    "at least it's not Mio",
+    "can you like, get better taste?",
+    "would not hold hands with",
+    "can you stop having such a bad taste",
+    "... \n http://i.imgur.com/iPR2j5H.jpg"
   ]
 
   @harsh_comments = [
     ":thinking:",
     "buddy pls",
-    "could be worse (like mio aoaoaoa)"
+    "could be worse (like mio aoaoaoa)",
+    "it's not mio, but... it's ok i guess",
+    "eh...",
+    "http://i.imgur.com/Z4ZxPlx.jpg",
+    "i mean, yeah i guess it's ok for you \n http://i.imgur.com/AOCvQjl.jpg"
   ]
 
   @nice_comments = [
     "nice taste :ok_hand:",
-    ":ok_hand:"
+    ":ok_hand:",
+    "would hold hands with",
+    "http://i.imgur.com/wquVBPP.png"
   ]
 
   @ten_comments = [
     ":weary: :ok_hand:",
     ":100: :100: :100: :100: :ok_hand:",
-    "based taste"
+    "patrician taste",
+    "muh nig",
+    "http://i.imgur.com/GmP1JiN.jpg",
+    "goddamn http://i.imgur.com/kP2KwBI.png",
+    "http://i.imgur.com/gIlc48T.jpg",
+    "http://i.imgur.com/J3ACDqh.png"
   ]
 
   @sacred_waifus = [
@@ -81,8 +96,21 @@ module WaifuRating
 
     if /mio|honda mio/i.match(waifu)
       msg = ">waifuing mio \n pls :boot:"
+    elsif /emilia|emiria|emt/i.match(waifu)
+      emt = [
+        "11/10 E M T",
+        "E\nM\nT",
+        "11/10 Ｅ・Ｍ・Ｔ！！ Emilia-tan Maji Tenshi!",
+        "Ｅ・Ｍ・Ｔ！！\nhttp://i.imgur.com/TZwUnea.png"
+      ]
+
     elsif /tsumugi|you|yourself|this bot/i.match(waifu)
-      msg = "I'm the cutest! :relaxed:"
+      qtbot = [
+        "I'm the cutest! :relaxed:",
+        "http://i.imgur.com/CgvPAva.jpg",
+        "http://i.imgur.com/cXaEQ30.jpg"
+      ]
+      msg = Utilities.random_element(qtbot)
     elsif score >= 10
       msg << Utilities.random_element(@ten_comments)
     elsif score.between?(7, 9)

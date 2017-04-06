@@ -4,11 +4,11 @@ module Messages
 
   message(containing: /dumb clar+i*(c+|s+)e+/) do |event|
     clarise_pics = [
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119041269727234/1467570514071.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119071409864705/1468286308084.png",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119085767098369/1468690209357.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119116045778944/1468707091151.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119174061391875/1469303650737.jpg"
+      "http://i.imgur.com/SVR6WMO.jpg",
+      "http://i.imgur.com/RzOg0tr.png",
+      "http://i.imgur.com/PW1LmeR.jpg",
+      "http://i.imgur.com/xPscDma.png",
+      "http://i.imgur.com/paiYnhF.jpg"
     ]
     event.respond Utilities.random_element(clarise_pics)
   end
@@ -33,7 +33,17 @@ module Messages
     elsif msg.include?(",")
       words = msg.split(",")
     else
-      words = ["yes", "no", "i dunno", "nope.", "lolno", "ye", "probably", "yes, but you have to bring back HRT"]
+      words = [
+        "yes", "no", "i dunno", "nope.", "lolno",
+        "ye", "probably", "yes, but you have to bring back HRT",
+        "Yes, but I'll need a blood sacrifice.",
+        "no, keep dreaming lamo",
+        "only if you accept KMR as your lord and savior.",
+        "everytime you ask this i die a little",
+        "i really don't know \n http://i.imgur.com/ytBUX9g.jpg",
+        "you can keep asking but both of us know the answer \n http://i.imgur.com/Z7R9VZv.jpg", "http://i.imgur.com/xyGMHGz.jpg", "http://i.imgur.com/NFO2KMb.png",
+        "yeah dude, whatever lets you sleep at night \n http://i.imgur.com/6QBnkdB.jpg", "everything is possible if you believe in magic my dude\n http://i.imgur.com/Ub5EDlm.jpg"
+      ]
     end
 
     event.respond Utilities.random_element(words)
