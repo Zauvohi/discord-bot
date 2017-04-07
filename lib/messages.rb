@@ -2,6 +2,18 @@ module Messages
   extend Discordrb::EventContainer
   require_relative 'utilities'
 
+  def self.answers
+    @answers ||= []
+  end
+
+  def self.load_answers
+    File.open("#{__dir__}/answers.txt", "r") do |file|
+      file.each_line do |line|
+        @answers << line
+      end
+    end
+  end
+
   message(containing: /dumb clar+i*(c+|s+)e+/) do |event|
     clarise_pics = [
       "http://i.imgur.com/SVR6WMO.jpg",
@@ -17,11 +29,14 @@ module Messages
     bot_id = event.bot.profile.id
     msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
     msg = msg.sub("?", "")
-    words = []
+    reply = ''
 
     nil unless msg.split(" ").size >= 3
 
+    load_answers if answers.length == 0
+
     if (/\sor\s/ =~ msg) != nil
+      words = []
       msg = msg.split("\sor\s")
       msg.each do |element|
         if element.include?(",")
@@ -30,23 +45,14 @@ module Messages
           words << element
         end
       end
+      reply = Utilities.random_element(words)
     elsif msg.include?(",")
-      words = msg.split(",")
+      reply = Utilities.random_element(msg.split(","))
     else
-      words = [
-        "yes", "no", "i dunno", "nope.", "lolno",
-        "ye", "probably", "yes, but you have to bring back HRT",
-        "Yes, but I'll need a blood sacrifice.",
-        "no, keep dreaming lamo",
-        "only if you accept KMR as your lord and savior.",
-        "everytime you ask this i die a little",
-        "i really don't know \n http://i.imgur.com/ytBUX9g.jpg",
-        "you can keep asking but both of us know the answer \n http://i.imgur.com/Z7R9VZv.jpg", "http://i.imgur.com/xyGMHGz.jpg", "http://i.imgur.com/NFO2KMb.png",
-        "yeah dude, whatever lets you sleep at night \n http://i.imgur.com/6QBnkdB.jpg", "everything is possible if you believe in magic my dude\n http://i.imgur.com/Ub5EDlm.jpg"
-      ]
+      reply = Utilities.random_element(@answers)
     end
 
-    event.respond Utilities.random_element(words)
+    event.respond reply
   end
 
 end
