@@ -90,7 +90,7 @@ module WaifuRating
 
   command(:ratewaifu, chain_usable:  false) do |event, *waifu|
     waifu = waifu.join(" ")
-    alt_waifu = /\sme\s|\smyself\s/i.match(waifu) != nil ? "you" : waifu
+    alt_waifu = /me($|\s)|myself/i.match(waifu) != nil ? "you" : waifu
     score = self.is_sacred?(waifu) ? 11 : rand(10)
     msg = ":thinking: I would rate #{alt_waifu}... #{score}/10 "
 
