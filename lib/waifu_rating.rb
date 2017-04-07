@@ -90,7 +90,7 @@ module WaifuRating
 
   command(:ratewaifu, chain_usable:  false) do |event, *waifu|
     waifu = waifu.join(" ")
-    alt_waifu = /me|myself/i.match(waifu) != nil ? "you" : waifu
+    alt_waifu = /\sme\s|\smyself\s/i.match(waifu) != nil ? "you" : waifu
     score = self.is_sacred?(waifu) ? 11 : rand(10)
     msg = ":thinking: I would rate #{alt_waifu}... #{score}/10 "
 
@@ -103,7 +103,7 @@ module WaifuRating
         "11/10 Ｅ・Ｍ・Ｔ！！ Emilia-tan Maji Tenshi!",
         "Ｅ・Ｍ・Ｔ！！\nhttp://i.imgur.com/TZwUnea.png"
       ]
-
+      msg = Utilities.random_element(emt)
     elsif /tsumugi|you|yourself|this bot/i.match(waifu)
       qtbot = [
         "I'm the cutest! :relaxed:",
