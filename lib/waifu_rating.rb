@@ -80,7 +80,11 @@ module WaifuRating
     'Yuisis',
     'Anthuria',
     'Yuel',
-    'Sochie'
+    'Sochie',
+    'Nio',
+    'Autistic potato',
+    'Arulumaya',
+    'Arulu'
   ]
 
   def self.is_sacred?(waifu)
