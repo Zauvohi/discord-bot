@@ -84,7 +84,9 @@ module WaifuRating
     'Nio',
     'Autistic potato',
     'Arulumaya',
-    'Arulu'
+    'Arulu',
+    'Minami',
+    'Minami Nitta'
   ]
 
   def self.is_sacred?(waifu)
