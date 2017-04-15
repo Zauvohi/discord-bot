@@ -86,7 +86,10 @@ module WaifuRating
     'Arulumaya',
     'Arulu',
     'Minami',
-    'Minami Nitta'
+    'Minami Nitta',
+    'Sagiri',
+    'Sagiri Izumi',
+    'Izumi Sagiri'
   ]
 
   def self.is_sacred?(waifu)
