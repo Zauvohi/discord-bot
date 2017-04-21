@@ -77,4 +77,20 @@ module CustomRoles
       "#{user.username} was removed from #{role}."
     end
   end
+
+  command(
+    :listroles,
+    chain_usable: false,
+    description: "Lists all the roles in this server."
+  ) do |event|
+    message = "```Roles in this server\n"
+    #get server
+    server = event.server
+    #list all the roles
+    server.roles.each do |role|
+      message << "#{role.name}\n"
+    end
+    message << "```"
+    event.user.pm(message)
+  end
 end
