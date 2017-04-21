@@ -15,10 +15,11 @@ module BaseCommands
   @news_channels = []
   @ban_list = Bans.new
 
-  command(:add_command,
-          chain_usable: true,
-          description: "Adds or updates a custom command. Usage: !add_command trigger type url. Example: !add_command stick img url_to_picture. Please keep it clean and SFW."
-          ) do |event, *args|
+  command(
+    :add_command,
+    chain_usable: true,
+    description: "Adds or updates a custom command. Usage: !add_command trigger type url. Example: !add_command stick img url_to_picture. Please keep it clean and SFW."
+  ) do |event, *args|
 
     return nil if @ban_list.user_banned?(event.author.discriminator)
     return nil if @ban_list.user_banned?(event.author.discriminator)
@@ -37,17 +38,21 @@ module BaseCommands
     end
   end
 
-  command(:update_command,
-          chain_usable: false,
-          description: "Updates a command. Usage: Same way you'd use add_command") do |event, *args|
+  command(
+    :update_command,
+    chain_usable: false,
+    description: "Updates a command. Usage: Same way you'd use add_command"
+  ) do |event, *args|
 
     return nil if @ban_list.user_banned?(event.author.discriminator)
     event.bot.execute_command(:add_command, event, args, chained: true)
   end
 
-  command(:delete_command,
-          chain_usable: false,
-          description: "Deletes a command. Usage: !delete_command trigger_to_be_deleted") do |event, trigger|
+  command(
+    :delete_command,
+    chain_usable: false,
+    description: "Deletes a command. Usage: !delete_command trigger_to_be_deleted"
+  ) do |event, trigger|
 
     return nil if @ban_list.user_banned?(event.author.discriminator)
     bot = event.bot
@@ -60,9 +65,11 @@ module BaseCommands
     event.respond "#{message}"
   end
 
-  command(:list_contents,
-          chain_usable: false,
-          description: "Lists a command's contents (URLs)") do |event, trigger|
+  command(
+    :list_contents,
+    chain_usable: false,
+    description: "Lists a command's contents (URLs)"
+  ) do |event, trigger|
 
     command = CustomCommandGenerator.new(trigger, "", "", "")
     message = "These are #{trigger} contents: \n"
@@ -74,9 +81,11 @@ module BaseCommands
     event.user.pm(message)
   end
 
-  command(:remove_item,
-          chain_usable: false,
-          description: "Deletes an item from a command. Usage: !remove_item command position") do |event, *args|
+  command(
+    :remove_item,
+    chain_usable: false,
+    description: "Deletes an item from a command. Usage: !remove_item command position"
+  ) do |event, *args|
 
     return nil if @ban_list.user_banned?(event.author.discriminator)
     trigger = args[0]
@@ -91,7 +100,11 @@ module BaseCommands
     event.respond "#{message}"
   end
 
-  command(:backup_commands, chain_usable: false) do |event|
+  command(
+    :backup_commands,
+    chain_usable: false,
+    description: "Sends a JSON file with a backup of all the custom commands."
+  ) do |event|
     return nil if @ban_list.user_banned?(event.author.discriminator)
     data = CustomCommandGenerator.get_json_contents
     file =  File.open("backup.json", "w") { |f| f << data }
@@ -101,9 +114,11 @@ module BaseCommands
     nil
   end
 
-  command(:change_avatar,
-          chain_usable: false,
-          description: "Changes the bot's avatar.") do |event, url|
+  command(
+    :change_avatar,
+    chain_usable: false,
+    description: "Changes the bot's avatar."
+  ) do |event, url|
 
     user_id = event.author.discriminator
     return nil if user_id != ENV['ADMINID']
@@ -119,9 +134,11 @@ module BaseCommands
     nil
   end
 
-  command(:ban,
-          chain_usable: false,
-          description: "Bans an user from using the bots. Usage: !ban user_id, mode. It can be total or partial.") do |event, *args|
+  command(
+    :ban,
+    chain_usable: false,
+    description: "Bans an user from using the bots. Usage: !ban user_id, mode. It can be total or partial."
+  ) do |event, *args|
 
     return nil if event.author.discriminator != ENV['ADMINID']
 
@@ -130,9 +147,11 @@ module BaseCommands
     @ban_list.add(user_id, level)
   end
 
-  command(:remove_ban,
-          chain_usable:false,
-          description: "Removes a banned user from the list. Usage: !remove_ban user_id") do |event, *args|
+  command(
+    :remove_ban,
+    chain_usable:false,
+    description: "Removes a banned user from the list. Usage: !remove_ban user_id"
+    ) do |event, *args|
 
     return nil if event.author.discriminator != ENV['ADMINID']
 
@@ -140,9 +159,11 @@ module BaseCommands
     @ban_list.delete(user_id)
   end
 
-  command(:playing,
-          chain_usable: false,
-          description: "Changes the game the bot is playing.") do |event, *game|
+  command(
+    :playing,
+    chain_usable: false,
+    description: "Changes the game the bot is playing."
+  ) do |event, *game|
 
     user_id = event.author.discriminator
     return nil if user_id != ENV['ADMINID']
@@ -150,10 +171,12 @@ module BaseCommands
     nil
   end
 
-  command(:news,
-          chain_usable: false,
-          bucket: :news,
-          description: "Lastest news from the official website. Example: !news 5m 5h . This will lurk the news page every 5 minutes for 5 hours. If the time params are ommitted, it'll bring the lastests news from the site.") do |event, *args|
+  command(
+    :news,
+    chain_usable: false,
+    bucket: :news,
+    description: "Lastest news from the official website. Example: !news 5m 5h . This will lurk the news page every 5 minutes for 5 hours. If the time params are ommitted, it'll bring the lastests news from the site."
+  ) do |event, *args|
 
     return nil if @ban_list.user_banned?(event.author.discriminator)
     bot = event.bot
