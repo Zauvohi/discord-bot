@@ -16,7 +16,7 @@ module CustomRoles
   command(
     :createrole,
     chain_usable: false,
-    description: "Adds a new role, usage: !addrole new_role. You need to be able to manage roles to use this."
+    description: "Adds a new role, usage: !createrole new_role. You need to be able to manage roles to use this."
   ) do |event, *args|
     message = ""
     custom_role = args.join(' ')
