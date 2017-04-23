@@ -85,7 +85,7 @@ module CustomRoles
   command(
     :listroles,
     chain_usable: false,
-    description: "Lists all the roles in this server."
+    description: "Lists all the roles in this server. Add a role to get a list with the users with that role."
   ) do |event, role|
     message = ""
     #get server
