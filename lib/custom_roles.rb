@@ -13,6 +13,10 @@ module CustomRoles
     roles_list.find { |r| r.name == role }
   end
 
+  def self.find_users_with(role, users)
+    users.select { |u| u.role?(role) }
+  end
+
   command(
     :createrole,
     chain_usable: false,
@@ -82,15 +86,27 @@ module CustomRoles
     :listroles,
     chain_usable: false,
     description: "Lists all the roles in this server."
-  ) do |event|
-    message = "```Roles in this server\n"
+  ) do |event, role|
+    message = ""
     #get server
     server = event.server
-    #list all the roles
-    server.roles.each do |role|
-      message << "#{role.name}\n"
+    #list all the roles if no role given
+    if (role.nil? || role.empty?)
+      message = "```Roles in this server\n"
+      server.roles.each do |r|
+        message << "#{r.name}\n"
+      end
+    else
+      message = "```Users with this role:\n"
+      role_object = find_role(role, server.roles)
+      users = find_users_with(role_object, server.members)
+      users.each do |user|
+        message << "#{user.display_name}\n"
+      end
     end
+
     message << "```"
     event.user.pm(message)
   end
+
 end
