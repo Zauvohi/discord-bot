@@ -41,6 +41,8 @@ class GWScores
     player_data = data.find_all do |row|
       row[2] == name
     end
+
+    player_data[0].push(day) if player_data.size == 1
     player_data
   end
 
@@ -50,7 +52,7 @@ class GWScores
     msg = "```Multiple players found:\n\n"
 
     players.each do |player|
-        msg += "##{player[0]} Name: #{player[2]} - Rank: #{player[3]} - ID: #{player[1]}\n"
+        msg += "# #{player[0]} Name: #{player[2]} - Rank: #{player[3]} - ID: #{player[1]}\n"
     end
     msg += "```"
     msg
@@ -58,13 +60,11 @@ class GWScores
 
   def print_player_data(data)
     %Q(
-    ```
-    Day: #{data[6]}
-    ##{data[0]}
-    Name: #{data[2]} (ID: #{data[1]}) Rank: #{data[3]}
-    Total points: #{data[4]}
-    Total battles: #{data[5]}
-    ```
+```Day: #{data[6]}
+# #{data[0]}
+Name: #{data[2]} (ID: #{data[1]}) Rank: #{data[3]}
+Total points: #{data[4]}
+Total battles: #{data[5]}```
     )
   end
 
