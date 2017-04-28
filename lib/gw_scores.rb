@@ -29,9 +29,31 @@ class GWScores
   def find_player_by_id(id, day)
     day = get_lastest_day if day.nil?
     data = get_parsed_data(day)
-    #data = [position, id, name, rank, points, battles, day]
     player_data = data.find { |row| row[1] == id }
+    #player_data = [position, id, name, rank, points, battles, day]
     player_data.push(day)
+  end
+
+  def find_player_by_name(name, day)
+    day = get_lastest_day if day.nil?
+    data = get_parsed_data(day)
+    #data = [position, id, name, rank, points, battles]
+    player_data = data.find_all do |row|
+      row[2] == name
+    end
+    player_data
+  end
+
+  def print_players(players)
+    return self.print_player_data(players.first) if players.size == 1
+
+    msg = "```Multiple players found:\n\n"
+
+    players.each do |player|
+        msg += "##{player[0]} Name: #{player[2]} - Rank: #{player[3]} - ID: #{player[1]}\n"
+    end
+    msg += "```"
+    msg
   end
 
   def print_player_data(data)

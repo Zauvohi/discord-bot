@@ -42,13 +42,23 @@ module GWScoresCommands
   command(
     :gw_score,
     chain_usable: false,
-    description: "Lookup a player's ranking by his ID, it's possible to specify a day. Example: !gw_score 5456 5 This will lookup the player 5456 on the 5th day."
-  ) do |event, id, day|
-    player_data = @gw_scores.find_player_by_id(id, day)
+    description: "Lookup a player's ranking by his ID or name, it's possible to specify a day. Example: !gw_score 5456 5 This will lookup the player 5456 on the 5th day. If there are multiple players with the same name, it'll return a list of all those players and you'll have to lookup by ID instead."
+  ) do |event, identifier, day|
+
+    is_id = Integer(identifier) rescue nil
+
+    if (is_id.nil?)
+      player_data = @gw_scores.find_player_by_name(identifier, day)
+    else
+      player_data = @gw_scores.find_player_by_id(identifier, day)
+    end
+
     msg = ""
 
     if (player_data.empty?)
       msg = "No info available."
+    elsif is_id.nil?
+      msg = @gw_scores.print_players(player_data)
     else
       msg = @gw_scores.print_player_data(player_data)
     end
