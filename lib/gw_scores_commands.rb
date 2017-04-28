@@ -71,4 +71,12 @@ module GWScoresCommands
   ) do |event|
     @gw_scores.list_downloaded_files
   end
+
+  command(
+    :gw_cutoffs,
+    chain_usable: false,
+    description: "Return the cutoffs for a day."
+  ) do |event, day|
+    @gw_scores.print_cutoffs(day)
+  end
 end

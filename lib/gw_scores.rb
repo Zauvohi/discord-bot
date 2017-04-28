@@ -6,6 +6,7 @@ class GWScores
   Dotenv.load('../.env')
   DIR_LOCATION = "#{__dir__}/spreadsheets/"
   GW_DAYS = ["prelims", "interlude", "1", "2", "3", "4", "5"]
+  GW_CUTOFFS = ["20", "30", "40", "80"]
 
   attr_accessor :gw_number, :drive_url
 
@@ -66,6 +67,31 @@ Name: #{data[2]} (ID: #{data[1]}) Rank: #{data[3]}
 Total points: #{data[4]}
 Total battles: #{data[5]}```
     )
+  end
+
+  def get_cutoffs(day)
+    day = get_lastest_day if day.nil?
+    data = get_parsed_data(day)
+    cutoffs = []
+    GW_CUTOFFS.each do |co|
+      temp = data.find { |row| row[0] == co + "000" }
+      # [position, points]
+      cutoffs << [temp[0], temp[4]]
+    end
+
+    cutoffs
+  end
+
+  def print_cutoffs(day)
+    day = get_lastest_day if day.nil?
+    msg = "```Cutoffs for day: #{day} \n\n"
+    cutoffs = get_cutoffs(day)
+
+    cutoffs.each do |cutoff|
+      msg += "# #{cutoff[0]} - #{cutoff[1]}\n"
+    end
+    msg += "```"
+    msg
   end
 
   private
