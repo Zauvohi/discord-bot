@@ -3,7 +3,7 @@ module GWScoresCommands
   require_relative 'gw_scores'
 
   @gw_scores = GWScores.new
-  @gw_scores.number = "29"
+  @gw_scores.gw_number = "29"
   @gw_scores.drive_url = "https://drive.google.com/drive/folders/0B2NyM2kaI7pReUt4VnJWYUNjTnc"
   @error_msg = "Missing info! Please provide the GW number and a URL with Drive folder holding the spreadsheets."
 
