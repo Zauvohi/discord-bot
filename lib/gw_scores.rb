@@ -6,18 +6,13 @@ class GWScores
   Dotenv.load('../.env')
   DIR_LOCATION = "#{__dir__}/spreadsheets/"
 
-  attr_accessor :gw_number, :gw_drive_url
-
-  def initialize(gw_number, drive_url)
-    @gw_number = gw_number
-    @drive_url = drive_url
-  end
+  attr_accessor :gw_number, :drive_url
 
   def download_ranking_data_for(day)
     session = GoogleDrive::Session.from_service_account_key(ENV['G_FILE'])
     collection = session.collection_by_url(@drive_url)
     base_name ="第#{@gw_number}回古戦場_個人貢献度ランキング_"
-    file_name = "gw_#{@gw_number}_"
+    file_name = "gw_#{@gw_number}"
 
     if (day == "prelims")
       day_name = "予選.csv"
@@ -25,36 +20,25 @@ class GWScores
       day_name = "インターバル.csv"
     else
       day_name = "#{day}日目.csv"
-      file_name += "day_#{day}"
     end
 
     file = collection.file_by_title("#{base_name}#{day_name}")
-    file.download_to_file("#{DIR_LOCATION}#{file_name}_individual_rankings.csv")
+    file.download_to_file("#{DIR_LOCATION}#{file_name}_individual_rankings_#{day}.csv")
   end
 
   def self.get_parsed_data(day)
-    file = "gw_#{@gw_number}_"
-
-    if (day == "prelims" || day == "interlude")
-      file += "#{day}"
-    else
-      file += "day_#{day}"
-    end
-
-    file =+ "_individual_rankings.csv"
-
+    file = "gw_#{@gw_number}_individual_rankings_#{day}.csv"
     CSV.parse(File.read(File.join(DIR_LOCATION, file)), { col_sep: "\t" })
     csv.shift
   end
 
   def self.get_lastest_day
-    f_name = "gw_#{@gw_number}_"
-    l_name = "_individual_rankings.csv"
-    days = Dir["#{DIR_LOCATION + f_name}_day_*#{l_name}"]
-    prelims = Dir["#{DIR_LOCATION + f_name}_prelims#{l_name}"]
+    f_name = "gw_#{@gw_number}_individual_rankings_"
+    days = Dir["#{DIR_LOCATION + f_name}[1-5].csv"]
+    prelims = Dir["#{DIR_LOCATION + f_name}prelims.csv"]
 
     if (days.size > 0)
-      days.last.scan(/_\d_/).gsub('_', '')
+      days.last.gsub(/\w+\d+\w+_/, "").gsub(".csv", "")
     elsif (prelims.size > 0)
       "prelims"
     else
