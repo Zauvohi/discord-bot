@@ -7,54 +7,76 @@ class GWScores
   DIR_LOCATION = "#{__dir__}/spreadsheets/"
   GW_DAYS = ["prelims", "interlude", "1", "2", "3", "4", "5"]
 
-  attr_accessor :gw_number, :drive_url, :recorded_days
+  attr_accessor :gw_number, :drive_url
 
-  def initialize
-    @recorded_days = []
+  def missing_info?
+    @gw_number.nil? || @drive_url.nil?
   end
 
+  def list_downloaded_files
+    check_files.inspect
+  end
 
-  def check_files
-    fname = "gw_#{@gw_number}_individual_rankings_"
-    files = Dir["#{DIR_LOCATION + fname}*"]
-    files.each do |file|
-      @recorded_days << file.gsub(/\w+\d+\w+_/, "").gsub(".csv", "")
+  def download_files
+    current_files = check_files
+    missing_days = GW_DAYS - current_files
+    missing_days.each do |day|
+      download_ranking_data_for(day)
     end
-
-    @recorded_days
+    check_files
   end
 
   def find_player_by_id(id, day)
-    day = get_lastest_day if day.empty?
+    day = get_lastest_day if day.nil?
     data = get_parsed_data(day)
-    #data = [position, id, name, rank, points, battles]
-    data.find { |row| row[1] == id }
+    #data = [position, id, name, rank, points, battles, day]
+    player_data = data.find { |row| row[1] == id }
+    player_data.push(day)
   end
 
   def print_player_data(data)
     %Q(
+    ```
+    Day: #{data[6]}
     ##{data[0]}
-    Name: #{data[2]} (ID: #{row[1]}) Rank: #{data[3]}
+    Name: #{data[2]} (ID: #{data[1]}) Rank: #{data[3]}
     Total points: #{data[4]}
     Total battles: #{data[5]}
+    ```
     )
   end
 
   private
 
-  def self.get_parsed_data(day)
-    return nil unless @recorded_days.include?(day)
+  def check_files
+    fname = "gw_#{@gw_number}_individual_rankings_"
+    files = Dir["#{DIR_LOCATION + fname}*"]
+    days = []
+
+    return days if files.empty?
+    sorted_files = files.sort_by { |f| File.ctime(f) }
+
+    sorted_files.each do |file|
+      days << file.scan(/(\d.csv|interlude.csv|prelims.csv)/).first.last.gsub(".csv", "")
+    end
+
+    days
+  end
+
+  def get_parsed_data(day)
+    return [] unless check_files.include?(day)
 
     file = "gw_#{@gw_number}_individual_rankings_#{day}.csv"
-    CSV.parse(File.read(File.join(DIR_LOCATION, file)), { col_sep: "\t" })
+    csv = CSV.parse(File.read(File.join(DIR_LOCATION, file)), { col_sep: "\t" })
     csv.shift
+    csv
   end
 
-  def self.get_lastest_day
-    @recorded_days.last
+  def get_lastest_day
+    check_files.last
   end
 
-  def self.download_ranking_data_for(day)
+  def download_ranking_data_for(day)
     session = GoogleDrive::Session.from_service_account_key(ENV['G_FILE'])
     collection = session.collection_by_url(@drive_url)
     base_name ="第#{@gw_number}回古戦場_個人貢献度ランキング_"
