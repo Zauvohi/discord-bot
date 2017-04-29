@@ -169,7 +169,12 @@ Total battles: #{data[5]}```
   def download_ranking_data_for(day)
     session = GoogleDrive::Session.from_service_account_key(ENV['G_FILE'])
     collection = session.collection_by_url(@drive_url)
-    formatting_methods = [method(:get_newest_formatting), method(:get_previous_formatting), method(:get_old_formatting)]
+    formatting_methods = [
+      method(:get_newest_formatting),
+      method(:get_previous_formatting),
+      method(:get_old_formatting)
+    ]
+
     fname = ""
     file = nil
     file_name = "gw_#{@gw_number}"
