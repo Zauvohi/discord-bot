@@ -124,24 +124,62 @@ Total battles: #{data[5]}```
     check_files.last
   end
 
+  def get_newest_formatting(day)
+    base_name ="第#{@gw_number}回古戦場_個人貢献度ランキング_"
+
+    if (day == "prelims")
+      day_name = "予選"
+    elsif (day == "interlude")
+      day_name = "インターバル"
+    elsif (day == "5")
+      day_name = "#{day}日目_速報"
+    else
+      day_name = "#{day}日目"
+    end
+
+    "#{base_name}#{day_name}"
+  end
+
+  def get_previous_formatting(day)
+    if (day == "prelims")
+      "第#{@gw_number}回古戦場_予選_個人貢献度ランキング"
+    elsif (day == "interlude")
+      "第#{@gw_number}回古戦場_インターバル_個人貢献度ランキング"
+    else
+      "第#{@gw_number}回古戦場_個人貢献度ランキング_本戦_#{day}日目"
+    end
+  end
+
+  def get_old_formatting(day)
+    if (day == "prelims")
+      "第#{@gw_number}回古戦場_予選_個人貢献度ランキング"
+    elsif (day == "interlude")
+      "第#{@gw_number}回古戦場 インターバル 個人貢献度表"
+    elsif (day == "5")
+      "第#{@gw_number}回古戦場_本戦#{day}日目_個人貢献度ランキング_速報"
+    else
+      "第#{@gw_number}回古戦場_本戦#{day}日目_個人貢献度ランキング"
+    end
+  end
+
+  def get_file_in_collection(collection, name)
+    collection.file_by_title("#{name}.csv")
+  end
+
   def download_ranking_data_for(day)
     session = GoogleDrive::Session.from_service_account_key(ENV['G_FILE'])
     collection = session.collection_by_url(@drive_url)
-    base_name ="第#{@gw_number}回古戦場_個人貢献度ランキング_"
+    formatting_methods = [method(:get_newest_formatting), method(:get_previous_formatting), method(:get_old_formatting)]
+    fname = ""
+    file = nil
     file_name = "gw_#{@gw_number}"
 
-    if (day == "prelims")
-      day_name = "予選.csv"
-    elsif (day == "interlude")
-      day_name = "インターバル.csv"
-    elsif (day == "5")
-      #速報.csv
-      day_name = "#{day}日目_速報.csv"
-    else
-      day_name = "#{day}日目.csv"
+    3.times do |i|
+      fname = formatting_methods[i].call(day)
+      file = get_file_in_collection(collection, fname)
+      break unless file.nil?
     end
 
-    file = collection.file_by_title("#{base_name}#{day_name}")
 
     return nil if file.nil?
 
