@@ -19,6 +19,16 @@ module GWScoresCommands
   end
 
   command(
+  :gw_update_edition,
+  chain_usable: false,
+  description: "Updates the edition of the current GW lookup. Example: !gw_update_edition 28 Warning, gw_update_scores won't work unless you use gw_update_info to provide the drive url"
+  ) do |event, edition|
+    return event.respond "Wrong arguments!" if (Integer(edition) rescue nil).nil?
+    @gw_scores.gw_number = edition
+    event.respond "Edition updated to #{edition}!"
+  end
+
+  command(
     :gw_update_scores,
     chain_usable: false,
     description: "Updates/downloads the missing scores."
