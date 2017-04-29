@@ -12,7 +12,7 @@ module GWScoresCommands
     chain_usable: false,
     description: "Sets the current GW edition along with a google drive URL with the sheets. Example: gw_edition 29 URL_to_sheet"
   ) do |event, edition, url|
-    event.respond @error_msg if (edition.nil? || url.nil?)
+    return event.respond @error_msg if (edition.nil? || url.nil?)
     @gw_scores.gw_number = edition
     @gw_scores.drive_url = url
     event.respond "Info updated!"
@@ -23,7 +23,7 @@ module GWScoresCommands
     chain_usable: false,
     description: "Updates/downloads the missing scores."
   ) do |event|
-    event.respond @error_msg if @gw_scores.missing_info?
+     return  @error_msg if @gw_scores.missing_info?
 
     downloaded_files = @gw_scores.download_files
     msg = ""

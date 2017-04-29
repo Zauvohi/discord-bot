@@ -134,6 +134,9 @@ Total battles: #{data[5]}```
       day_name = "予選.csv"
     elsif (day == "interlude")
       day_name = "インターバル.csv"
+    elsif (day == "5")
+      #速報.csv
+      day_name = "#{day}日目_速報.csv"
     else
       day_name = "#{day}日目.csv"
     end
