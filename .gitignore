@@ -2,3 +2,6 @@
 lib/commands/log.txt
 lib/commands/commands.json
 lib/ban_list.json
+Tsumugi-a95606330895.json
+lib/spreadsheets/*
+!lib/spreadsheets/.gitkeep
