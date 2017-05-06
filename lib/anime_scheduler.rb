@@ -1,4 +1,4 @@
-class AnimeSchedule
+class AnimeScheduler
 
   require 'tzinfo'
   require 'date'
