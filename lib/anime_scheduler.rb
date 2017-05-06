@@ -23,72 +23,63 @@ class AnimeScheduler
         {
           time: '06:30',
           station:'AT-X (Repeat Broadcast)',
-          location: 'Tokyo',
-          next_airing: 0
+          location: 'Tokyo'
         },
         {
           time: '24:00',
           station:'TOKYO MX',
-          location: 'Tokyo',
-          next_airing: 0
+          new_ep: true,
+          location: 'Tokyo'
         }
       ],
       sunday: [
         {
           time: '03:28',
           station:'MBS',
-          location: 'Osaka',
-          next_airing: 0
+          location: 'Osaka'
         },
         {
           time: '06:30',
           station:'AT-X (Repeat Broadcast)',
-          location: 'Tokyo',
-          next_airing: 0
+          location: 'Tokyo'
         }
       ],
       monday: [
         {
           time: '22:30',
           station:'AT-X',
-          location: 'Tokyo',
-          next_airing: 0
+          location: 'Tokyo'
         }
       ],
       wednesday: [
         {
           time: '02:28',
           station: 'Hokkaido Broadcasting',
-          location: 'Hokkaido',
-          next_airing: 0
+          location: 'Hokkaido'
         },
         {
           time: '14:30',
           station: 'AT-X (Repeat Broadcast)',
-          location: 'Tokyo',
-          next_airing: 0
+          location: 'Tokyo'
         }
       ],
       thursday: [
         {
           time: '02:05',
           station: 'TV Aichi',
-          location: 'Aichi',
-          next_airing: 0
+          location: 'Aichi'
         },
         {
           time: '02:30',
           station: 'RKB Mainichi Broadcasting',
-          location: 'Fukuoka',
-          next_airing: 0
+          location: 'Fukuoka'
         }
       ],
       friday: [
         {
           time: '01:55',
           station: 'Sagatevi',
-          location: 'Saga',
-          next_airing: 0
+          location: 'Saga'
         }
       ]
     }
