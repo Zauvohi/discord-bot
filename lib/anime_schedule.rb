@@ -5,7 +5,7 @@ class AnimeSchedule
   require 'rufus-scheduler'
 
   TZ = "+09:00" # JST - Japan/Tokyo
-  attr_reader :current_episode, :days, :schedules
+  attr_reader :current_episode, :days, :schedules, :channel_ids, :bot
 
   def initialize#(bot, channel_id)
     #@bot = bot
@@ -94,6 +94,17 @@ class AnimeSchedule
         }
       ]
     }
+    @scheduler = Rufus::Scheduler.new
+    @channel_ids = []
+    @bot = nil
+  end
+
+  def add_channel(id)
+    @channel_ids.push(id)
+  end
+
+  def add_bot(bot)
+    @bot = bot
   end
 
   def airing_today
@@ -132,18 +143,18 @@ class AnimeSchedule
     end
   end
 
-  def setup
+  def schedule
     # set up all the schedulers for all tv stations
-    scheduler = Rufus::Scheduler.new
-
-    @schedules.each do |station, info|
-      day = @days.key(info[0]).to_s
-      time = info[1]
-      time = get_next_airing_for(day, time)
-      msg = "GBF Anime currently airing at #{info[3]}, location: #{info[4]}"
-
-      scheduler.every "7d", first_in: "#{time}s" do |job|
-        @bot.send_message(@channel_id, msg)
+    # day: [{time, station, location, next_airing}]
+    @schedules.each do |day, stations|
+      stations.each do |info|
+        date = get_next_airing_for(day.to_s, info[:time])
+        msg = "GBF Anime currently airing:\n#{info[:time]} JST - #{info[:station]} (#{info[:location]})"
+        @scheduler.every "7d", first_in: "#{date.to_i}s", tag: "anime" do |job|
+          @channel_ids.each do |channel|
+            @bot.send_message(channel, msg)
+          end
+        end
       end
     end
   end
