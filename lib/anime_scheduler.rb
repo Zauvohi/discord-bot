@@ -7,9 +7,7 @@ class AnimeScheduler
   TZ = "+09:00" # JST - Japan/Tokyo
   attr_reader :current_episode, :days, :schedules, :channel_ids, :bot
 
-  def initialize#(bot, channel_id)
-    #@bot = bot
-    #@channel_id = channel_id
+  def initialize
     @current_episode = get_current_episode
     @days = {
       sunday: 0,
