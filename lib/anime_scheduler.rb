@@ -5,10 +5,9 @@ class AnimeScheduler
   require 'rufus-scheduler'
 
   TZ = "+09:00" # JST - Japan/Tokyo
-  attr_reader :current_episode, :days, :schedules, :channel_ids, :bot
+  attr_reader :days, :schedules, :channel_ids, :bot
 
   def initialize
-    @current_episode = get_current_episode
     @days = {
       sunday: 0,
       monday: 1,
@@ -130,6 +129,20 @@ class AnimeScheduler
       airings = format_schedule(today_airings)
       "Remaining anime airings for today are: \n#{airings}"
     end
+  end
+
+  def timetable
+    msg = "```This is the timetable for the GBF anime:\n"
+    @schedules.each do |day, stations|
+      #puts day
+      #puts stations
+      msg += "#{day.to_s.capitalize}:\n"
+      stations.each do |info|
+        #puts info
+        msg += "\t #{info[:time]} JST - #{info[:station]} (#{info[:location]}) \n"
+      end
+    end
+    msg += "```"
   end
 
   def schedule
