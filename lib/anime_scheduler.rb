@@ -5,7 +5,7 @@ class AnimeScheduler
   require 'rufus-scheduler'
 
   TZ = "+09:00" # JST - Japan/Tokyo
-  attr_reader :days, :schedules, :channel_ids, :bot
+  attr_reader :days, :schedules, :channel_ids, :bot, :role
 
   def initialize
     @days = {
