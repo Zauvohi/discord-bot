@@ -85,10 +85,20 @@ class AnimeScheduler
     @scheduler = Rufus::Scheduler.new
     @channel_ids = []
     @bot = nil
+    @role = nil
+  end
+
+  def add_role(role)
+    @role = role
   end
 
   def add_channel(id)
     @channel_ids.push(id)
+  end
+
+  def remove_channel(id)
+    index = @channel_ids.index(id)
+    @channel_ids.slice!(index)
   end
 
   def add_bot(bot)
@@ -104,7 +114,7 @@ class AnimeScheduler
     else
       today_airings = airing_info(today.wday)
       airings = format_schedule(today_airings)
-      msg = "Airings for #{@days.key(today.wday).to_s.capitalize}\n#{airings}"
+      msg = "Airings for #{@days.key(today.wday).to_s.capitalize}\n\n#{airings}"
     end
     msg
   end
@@ -124,25 +134,27 @@ class AnimeScheduler
     if (today_airings.empty?)
       next_airings = airing_info(next_airing_day.wday)
       airings = format_schedule(next_airings)
-      "Next airings for #{@days.key(next_airing_day.wday).to_s.capitalize}\n#{airings}"
+      "Next airings for #{@days.key(next_airing_day.wday).to_s.capitalize}\n\n#{airings}"
     else
       airings = format_schedule(today_airings)
-      "Remaining anime airings for today are: \n#{airings}"
+      "Remaining anime airings for today are: \n\n#{airings}"
     end
   end
 
   def timetable
-    msg = "```This is the timetable for the GBF anime:\n"
+    msg = "```This is the timetable for the GBF anime:\n\n"
     @schedules.each do |day, stations|
-      #puts day
-      #puts stations
       msg += "#{day.to_s.capitalize}:\n"
       stations.each do |info|
-        #puts info
         msg += "\t #{info[:time]} JST - #{info[:station]} (#{info[:location]}) \n"
       end
+      msg += "\n"
     end
     msg += "```"
+  end
+
+  def already_scheduled?
+    @scheduler.jobs(tag: "anime").size > 0
   end
 
   def schedule
@@ -150,15 +162,17 @@ class AnimeScheduler
     # day: [{time, station, location, next_airing}]
     @schedules.each do |day, stations|
       stations.each do |info|
-        date = get_next_airing_for(day.to_s, info[:time])
-        msg = "GBF Anime currently airing:\n#{info[:time]} JST - #{info[:station]} (#{info[:location]})"
-        @scheduler.every "7d", first_in: "#{date.to_i}s", tag: "anime" do |job|
+        seconds = get_next_airing_for(day.to_s, info[:time])
+        message = "#{@role.mention} GBF Anime currently airing:\n#{info[:time]} JST - #{info[:station]} (#{info[:location]})"
+        @scheduler.every "7d", first_in: "#{seconds}s", tag: "anime" do |job|
           @channel_ids.each do |channel|
-            @bot.send_message(channel, msg)
+            @bot.send_message(channel, message)
           end
         end
       end
     end
+
+    puts @scheduler.jobs(tags: 'anime')
   end
 
   private
@@ -172,8 +186,11 @@ class AnimeScheduler
   def next_date_for(day)
     # we get the next how long until the next ep
     date = Date.parse(day)
+    # if the lastest day we're looking for was last month, we have to increase
+    # the days by 14 (2 weeks), otherwise it'll give us a negative number
+    days_to_increase = Date.today.month > date.month ? 14 : 7
     # check if it's next week
-    delta = date > Date.today ? 0 : 7
+    delta = date > Date.today ? 0 : days_to_increase
     (date + delta).to_time
   end
 
