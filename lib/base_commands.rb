@@ -233,4 +233,12 @@ module BaseCommands
       nil
     end
   end
+
+  command(
+    :anime,
+    chain_usable: false,
+    description: "Tells when is the next airing for the GBF Anime"
+  ) do |event|
+
+  end
 end
