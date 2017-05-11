@@ -116,7 +116,7 @@ class CustomCommandGenerator
       File.open(log_path, 'w') { |f| f << "logger:" }
     end
 
-    File.open(log_path, 'w') do |f|
+    File.open(log_path, 'a') do |f|
       f << "User: #{@user} #{action}ed #{@trigger} (type: #{@type}, url: #{@url})"
     end
   end
