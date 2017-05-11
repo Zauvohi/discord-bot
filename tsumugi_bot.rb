@@ -1,6 +1,5 @@
 require 'discordrb'
 require 'dotenv'
-require 'pry'
 require_relative './lib/base_commands'
 require_relative './lib/messages'
 require_relative './lib/custom_commands_generator'
