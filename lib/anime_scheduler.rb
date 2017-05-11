@@ -99,6 +99,7 @@ class AnimeScheduler
   def remove_channel(id)
     index = @channel_ids.index(id)
     @channel_ids.slice!(index)
+    save_channels
   end
 
   def add_bot(bot)
@@ -180,6 +181,12 @@ class AnimeScheduler
   def load_channels
     file = File.read("#{__dir__}/config/channel_ids.txt")
     @channel_ids = file.split("\n").map(&:to_i)
+  end
+
+  def save_channels
+    File.open("#{__dir__}/config/channel_ids.txt", 'w') do |file|
+      @channel_ids.each { |id| file << "#{id}\n" }
+    end
   end
 
   def get_current_episode
