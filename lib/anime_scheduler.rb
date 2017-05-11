@@ -1,6 +1,5 @@
 class AnimeScheduler
 
-  require 'tzinfo'
   require 'date'
   require 'rufus-scheduler'
 
@@ -83,7 +82,7 @@ class AnimeScheduler
       ]
     }
     @scheduler = Rufus::Scheduler.new
-    @channel_ids = []
+    @channel_ids = load_channels
     @bot = nil
     @role = nil
   end
@@ -93,6 +92,7 @@ class AnimeScheduler
   end
 
   def add_channel(id)
+    File.open("#{__dir__}/config/chanel_ids.txt", 'a') { |f| f << "#{id}\n" }
     @channel_ids.push(id)
   end
 
@@ -177,6 +177,11 @@ class AnimeScheduler
 
   private
 
+  def load_channels
+    file = File.read("#{__dir__}/config/channel_ids.txt")
+    @channel_ids = file.split("\n").map(&:to_i)
+  end
+
   def get_current_episode
     first_airing = Time.new(2017, 4, 1, 24, 0, 0, TZ)
     current_day = Time.now
@@ -190,7 +195,7 @@ class AnimeScheduler
     # the days by 14 (2 weeks), otherwise it'll give us a negative number
     days_to_increase = Date.today.month > date.month ? 14 : 7
     # check if it's next week
-    delta = date > Date.today ? 0 : days_to_increase
+    delta = date > Time.now.getlocal(TZ).to_date ? 0 : days_to_increase
     (date + delta).to_time
   end
 

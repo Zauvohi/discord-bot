@@ -1,5 +1,6 @@
 require 'discordrb'
 require 'dotenv'
+require 'pry'
 require_relative './lib/base_commands'
 require_relative './lib/messages'
 require_relative './lib/custom_commands_generator'
@@ -8,7 +9,12 @@ require_relative './lib/waifu_rating'
 require_relative './lib/custom_roles'
 require_relative './lib/gw_scores_commands'
 require_relative './lib/anime_commands'
+require_relative './lib/anime_scheduler'
 Dotenv.load
+
+class Discordrb::Commands::CommandBot
+  attr_accessor :anime_scheduler
+end
 
 bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], client_id: ENV['APPID'], prefix: '!'
 
@@ -22,4 +28,15 @@ bot.include! AnimeCommands
 custom_commands = CustomCommandGenerator.load_commands(CustomCommands)
 bot.include! custom_commands
 
-bot.run
+#bot.run
+bot.run :async
+anime_scheduler = AnimeScheduler.new
+anime_scheduler.add_bot(bot)
+role = bot.servers[ENV['MAIN_SERVER'].to_i].roles.find { |r| r.name == "anime" }
+anime_scheduler.add_role(role)
+anime_scheduler.schedule
+bot.anime_scheduler = anime_scheduler
+#binding.pry
+
+#bot.send_message(304749500818259968, "Initializing stuff!")
+bot.sync

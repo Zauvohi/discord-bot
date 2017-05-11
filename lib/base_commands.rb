@@ -235,10 +235,19 @@ module BaseCommands
   end
 
   command(
-    :anime,
-    chain_usable: false,
+    :test,
+    chain_usable: true,
     description: "Tells when is the next airing for the GBF Anime"
   ) do |event|
-
+    #event.bot.execute_command(:test2, event, [])
+    command = event.bot.commands[:test2]
+    command.call(event, [], false)
+  end
+  command(
+    :test2,
+    chain_usable: true,
+    description: "Tells when is the next airing for the GBF Anime"
+  ) do |event|
+    event.respond "Tested"
   end
 end
