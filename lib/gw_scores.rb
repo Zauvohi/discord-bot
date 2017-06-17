@@ -125,14 +125,15 @@ Total battles: #{data[5]}```
   end
 
   def get_newest_formatting(day)
-    base_name ="第#{@gw_number}回古戦場_個人貢献度ランキング_"
+    base_name = "第#{@gw_number}回古戦場_個人貢献度ランキング_"
 
     if (day == "prelims")
       day_name = "予選"
     elsif (day == "interlude")
       day_name = "インターバル"
     elsif (day == "5")
-      day_name = "#{day}日目_速報"
+      #day_name = "#{day}日目_速報"
+      day_name = "本戦_#{day}日目_速報値"
     else
       day_name = "#{day}日目"
     end
