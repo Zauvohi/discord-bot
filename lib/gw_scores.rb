@@ -8,7 +8,7 @@ class GWScores
   GW_DAYS = ["prelims", "interlude", "1", "2", "3", "4", "5"]
   GW_CUTOFFS = ["20", "30", "40", "80"]
 
-  attr_accessor :gw_number, :drive_url
+  attr_accessor :gw_number, :drive_url, :sheet_url
 
   def missing_info?
     @gw_number.nil? || @drive_url.nil?
@@ -92,6 +92,17 @@ Total battles: #{data[5]}```
     end
     msg += "```"
     msg
+  end
+
+  def fill_scores_sheet(score, enemy_score)
+    session = GoogleDrive::Session.from_service_account_key(ENV['G_FILE'])
+    sheet = session.spreadsheet_by_key(@spreadsheet_key).worksheets[0]
+    row = get_empty_row(sheet)
+    current_time = Time.now.getlocal('-07:00') #PDT change once Daylight savings is over
+    sheet[row, 2] = current_time
+    sheet[row, 4] = score
+    sheet[row, 5] = enemy_score
+    sheet.save
   end
 
   private
@@ -192,4 +203,15 @@ Total battles: #{data[5]}```
     file.download_to_file("#{DIR_LOCATION}#{file_name}_individual_rankings_#{day}.csv")
   end
 
+  def get_empty_row(sheet)
+    # time is on B column (2)
+    empty_in = 0
+    for i in 5..96
+      if sheet[i, 2] == ""
+        empty_in = i
+        break
+      end
+    end
+    empty_in
+  end
 end
