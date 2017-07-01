@@ -22,17 +22,17 @@ bot.include! Messages
 bot.include! WaifuRating
 bot.include! CustomRoles
 bot.include! GWScoresCommands
-bot.include! AnimeCommands
+# bot.include! AnimeCommands
 
 custom_commands = CustomCommandGenerator.load_commands(CustomCommands)
 bot.include! custom_commands
 
-bot.run :async
-anime_scheduler = AnimeScheduler.new
-anime_scheduler.add_bot(bot)
-role = bot.servers[ENV['MAIN_SERVER'].to_i].roles.find { |r| r.name == "anime" }
-anime_scheduler.add_role(role)
-anime_scheduler.schedule
-bot.anime_scheduler = anime_scheduler
+# bot.run :async
+# anime_scheduler = AnimeScheduler.new
+# anime_scheduler.add_bot(bot)
+# role = bot.servers[ENV['MAIN_SERVER'].to_i].roles.find { |r| r.name == "anime" }
+# anime_scheduler.add_role(role)
+# anime_scheduler.schedule
+# bot.anime_scheduler = anime_scheduler
 
-bot.sync
+bot.run
