@@ -1,6 +1,7 @@
-class Utilities
+module Utilities
+  module_function
 
-  def self.underscore(string)
+  def underscore(string)
     if (string.respond_to?(:join))
       string.join("_").downcase
     else
@@ -8,13 +9,13 @@ class Utilities
     end
   end
 
-  def self.random_element(elements_array)
+  def random_element(elements_array)
     lenght = elements_array.size
     elements_array[rand(0 .. lenght - 1)]
   end
 
 
-  def self.find_raid_name(raid_alias, raid_info)
+  def find_raid_name(raid_alias, raid_info)
     actual_name = ""
 
     if raid_info.has_key?(raid_alias)
@@ -28,5 +29,9 @@ class Utilities
     end
 
     actual_name
+  end
+
+  def generate_code(lenght)
+    ('a'..'z').to_a.shuffle[0,lenght].join.upcase
   end
 end

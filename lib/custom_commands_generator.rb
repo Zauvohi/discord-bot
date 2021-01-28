@@ -12,18 +12,6 @@ class CustomCommandGenerator
     @user = user
   end
 
-  def log_command
-    log_path = DIR_LOCATION + 'log.txt'
-
-    unless File.exists?(log_path)
-      File.open(log_path, 'w') { |f| f << "logger:" }
-    end
-
-    File.open(log_path, 'w') do |f|
-      f << "User: #{@user} added #{@trigger} (type: #{@type}, url: #{@url})"
-    end
-  end
-
   def self.load_json
     commands_path = DIR_LOCATION + 'commands.json'
 
@@ -45,6 +33,10 @@ class CustomCommandGenerator
     container
   end
 
+  def self.get_json_contents
+    File.read(File.join(DIR_LOCATION, 'commands.json'))
+  end
+
   def new_command?(trigger)
     !@commands_list.has_key?(trigger)
   end
@@ -55,10 +47,14 @@ class CustomCommandGenerator
 
   def save_command(command)
     @commands_list[@trigger] = command
-    File.open(File.join(__dir__, '/commands/commands.json'), 'w') do |f|
-      f.write(JSON.pretty_generate(@commands_list))
-    end
-    log_command
+    generate_json
+    log_command("add")
+  end
+
+  def delete_command(command)
+    @commands_list.delete(command)
+    generate_json
+    log_command("delet")
   end
 
   def add
@@ -80,5 +76,54 @@ class CustomCommandGenerator
       msg = "This url was already added."
     end
     msg
+  end
+
+  def delete
+    msg = "command #{@trigger} was deleted"
+
+    if new_command?(@trigger)
+      msg = "this command doesn't exist."
+    else
+      delete_command(@trigger)
+    end
+    msg
+  end
+
+  def list_contents
+    @commands_list[@trigger]["urls"] unless new_command?(@trigger)
+  end
+
+  def remove_item(position)
+    msg = ""
+
+    if new_command?(@trigger)
+      msg = "This command does not exist"
+    else
+      deleted = @commands_list[@trigger]["urls"].slice!(position.to_i)
+      generate_json
+      msg = "Item in the position [ #{position} ] from *#{@trigger}* was deleted (it was <#{deleted}>)"
+    end
+
+    msg
+  end
+
+  private
+
+  def log_command(action)
+    log_path = DIR_LOCATION + 'log.txt'
+
+    unless File.exists?(log_path)
+      File.open(log_path, 'w') { |f| f << "logger:" }
+    end
+
+    File.open(log_path, 'a') do |f|
+      f << "User: #{@user} #{action}ed #{@trigger} (type: #{@type}, url: #{@url})"
+    end
+  end
+
+  def generate_json
+    File.open(File.join(__dir__, '/commands/commands.json'), 'w') do |f|
+      f.write(JSON.pretty_generate(@commands_list))
+    end
   end
 end

@@ -1,36 +1,38 @@
 require 'discordrb'
 require 'dotenv'
-require_relative './lib/raid_commands'
+require_relative './lib/base_commands'
 require_relative './lib/messages'
 require_relative './lib/custom_commands_generator'
 require_relative './lib/custom_commands'
+require_relative './lib/waifu_rating'
+require_relative './lib/custom_roles'
+require_relative './lib/gw_scores_commands'
+require_relative './lib/anime_commands'
+require_relative './lib/anime_scheduler'
 Dotenv.load
 
+class Discordrb::Commands::CommandBot
+  attr_accessor :anime_scheduler
+end
+
 bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], client_id: ENV['APPID'], prefix: '!'
-bot.include! RaidCommands
+
+bot.include! BaseCommands
 bot.include! Messages
+bot.include! WaifuRating
+bot.include! CustomRoles
+bot.include! GWScoresCommands
+# bot.include! AnimeCommands
 
 custom_commands = CustomCommandGenerator.load_commands(CustomCommands)
 bot.include! custom_commands
 
-bot.command(:add_command,
-            chain_usable: false,
-            description: "Adds or updates a custom command. Usage: !add_command trigger type url. Example: !add_command stick img url_to_picture. Please keep it clean and SFW."
-            ) do |event, *args|
-
-  trigger = args[0]
-  type = args[1]
-  url = args[2]
-
-  unless args.size != 3
-    command = CustomCommandGenerator.new(trigger, type, url, event.user.name)
-    message = command.add
-    new_commands = CustomCommandGenerator.load_commands(CustomCommands)
-    bot.include! new_commands
-    event.respond "#{message}"
-  else
-    event.respond "Missing arguments. Check !help add_command for more info."
-  end
-end
+# bot.run :async
+# anime_scheduler = AnimeScheduler.new
+# anime_scheduler.add_bot(bot)
+# role = bot.servers[ENV['MAIN_SERVER'].to_i].roles.find { |r| r.name == "anime" }
+# anime_scheduler.add_role(role)
+# anime_scheduler.schedule
+# bot.anime_scheduler = anime_scheduler
 
 bot.run

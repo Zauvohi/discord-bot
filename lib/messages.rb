@@ -2,13 +2,25 @@ module Messages
   extend Discordrb::EventContainer
   require_relative 'utilities'
 
+  def self.answers
+    @answers ||= []
+  end
+
+  def self.load_answers
+    File.open("#{__dir__}/answers.txt", "r") do |file|
+      file.each_line do |line|
+        @answers << line
+      end
+    end
+  end
+
   message(containing: /dumb clar+i*(c+|s+)e+/) do |event|
     clarise_pics = [
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119041269727234/1467570514071.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119071409864705/1468286308084.png",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119085767098369/1468690209357.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119116045778944/1468707091151.jpg",
-      "https://cdn.discordapp.com/attachments/222920939598381060/223119174061391875/1469303650737.jpg"
+      "http://i.imgur.com/SVR6WMO.jpg",
+      "http://i.imgur.com/RzOg0tr.png",
+      "http://i.imgur.com/PW1LmeR.jpg",
+      "http://i.imgur.com/xPscDma.png",
+      "http://i.imgur.com/paiYnhF.jpg"
     ]
     event.respond Utilities.random_element(clarise_pics)
   end
@@ -17,12 +29,15 @@ module Messages
     bot_id = event.bot.profile.id
     msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
     msg = msg.sub("?", "")
-    words = []
+    reply = ''
 
     nil unless msg.split(" ").size >= 3
 
+    load_answers if answers.length == 0
+
     if (/\sor\s/ =~ msg) != nil
-      msg = msg.split("or")
+      words = []
+      msg = msg.split("\sor\s")
       msg.each do |element|
         if element.include?(",")
           words.concat(element.split(","))
@@ -30,12 +45,14 @@ module Messages
           words << element
         end
       end
+      reply = Utilities.random_element(words)
     elsif msg.include?(",")
-      words = msg.split(",")
+      reply = Utilities.random_element(msg.split(","))
     else
-      words = ["yes", "no", "i dunno", "nope.", "lolno", "ye", "probably", "yes, but you have to kill HRT"]
+      reply = Utilities.random_element(@answers)
     end
 
-    event.respond Utilities.random_element(words)
+    event.respond reply
   end
+
 end
