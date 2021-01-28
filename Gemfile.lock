@@ -3,7 +3,6 @@ GEM
   specs:
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
-    chronic (0.10.2)
     declarative (0.0.9)
     declarative-option (0.1.0)
     discordrb (3.2.1)
@@ -22,7 +21,7 @@ GEM
     event_emitter (0.2.5)
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.14.2)
     google-api-client (0.11.1)
       addressable (>= 2.5.1)
       googleauth (~> 0.5)
@@ -95,8 +94,6 @@ GEM
     websocket-client-simple (0.3.0)
       event_emitter
       websocket
-    whenever (0.9.7)
-      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -109,7 +106,6 @@ DEPENDENCIES
   rufus-scheduler
   tzinfo
   tzinfo-data
-  whenever
 
 BUNDLED WITH
    1.13.6
