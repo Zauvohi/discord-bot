@@ -9,6 +9,7 @@ require_relative './lib/custom_roles'
 require_relative './lib/gw_scores_commands'
 require_relative './lib/anime_commands'
 require_relative './lib/anime_scheduler'
+# require_relative './db/config'
 Dotenv.load
 
 class Discordrb::Commands::CommandBot
@@ -26,6 +27,9 @@ bot.include! GWScoresCommands
 
 custom_commands = CustomCommandGenerator.load_commands(CustomCommands)
 bot.include! custom_commands
+
+# DB Stuff
+# DB_CONTAINER = ROM.container(ROMCOnfig.config)
 
 # bot.run :async
 # anime_scheduler = AnimeScheduler.new
