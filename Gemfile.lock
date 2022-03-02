@@ -128,7 +128,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retriable (3.1.2)
-    rexml (3.2.4)
+    rexml (3.2.5)
     rom (5.2.6)
       rom-changeset (~> 5.2, >= 5.2.3)
       rom-core (~> 5.2, >= 5.2.5)
