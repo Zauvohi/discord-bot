@@ -12,17 +12,17 @@ require_relative './lib/anime_scheduler'
 # require_relative './db/config'
 Dotenv.load
 
-class Discordrb::Commands::CommandBot
-  attr_accessor :anime_scheduler
-end
+# class Discordrb::Commands::CommandBot
+#   attr_accessor :anime_scheduler
+# end
 
-bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], client_id: ENV['APPID'], prefix: '!'
+bot = Discordrb::Commands::CommandBot.new token: ENV['TOKEN'], client_id: ENV['APPID'], prefix: '!', advanced_functionality: true
 
 bot.include! BaseCommands
 bot.include! Messages
 bot.include! WaifuRating
 bot.include! CustomRoles
-bot.include! GWScoresCommands
+# bot.include! GWScoresCommands
 # bot.include! AnimeCommands
 
 custom_commands = CustomCommandGenerator.load_commands(CustomCommands)
