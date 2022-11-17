@@ -26,7 +26,7 @@ class CustomCommandGenerator
   def self.load_commands(container)
     commands = CustomCommandGenerator.load_json
     commands.each do |command, params|
-      container.command(command.to_sym, chain_usable: false) do |event|
+      container.command(command.to_sym) do |event|
         event << Utilities.random_element(params["urls"])
       end
     end

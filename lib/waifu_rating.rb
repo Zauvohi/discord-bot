@@ -97,7 +97,7 @@ module WaifuRating
     waifus_regex.match(waifu) != nil
   end
 
-  command(:ratewaifu, chain_usable:  false) do |event, *waifu|
+  command(:ratewaifu) do |event, *waifu|
     waifu = waifu.join(" ")
     alt_waifu = /me($|\s)|myself/i.match(waifu) != nil ? "you" : waifu
     score = self.is_sacred?(waifu) ? 11 : rand(10)
