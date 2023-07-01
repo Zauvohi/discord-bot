@@ -14,7 +14,7 @@ module Messages
     end
   end
 
-  message(contains: /dumb clar+i*(c+|s+)e+/) do |event|
+  message(content: /dumb clar+i*(c+|s+)e+/) do |event|
     clarise_pics = [
       "http://i.imgur.com/SVR6WMO.jpg",
       "http://i.imgur.com/RzOg0tr.png",
@@ -25,8 +25,8 @@ module Messages
     event.respond Utilities.random_element(clarise_pics)
   end
 
-  message(contains: /twitter.com/) do |event|
-    msg = event.message
+  message(content: 'twitter.com') do |event|
+    msg = event.message.to_s
     replacement = msg.gsub(/https:\/\/twitter.com/, "https://vxtwitter.com")
     event.respond(replacement)
   end
