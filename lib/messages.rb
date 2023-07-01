@@ -25,6 +25,12 @@ module Messages
     event.respond Utilities.random_element(clarise_pics)
   end
 
+  message(containing: /twitter.com/) do |event|
+    msg = event.message
+    replacement = msg.gsub(/https:\/\/twitter.com/, "https://vxtwitter.com")
+    event.respond(replacement)
+  end
+
   mention(containing: /\sor\s+|\?/) do |event|
     bot_id = event.bot.profile.id
     msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
