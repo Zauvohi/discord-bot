@@ -25,8 +25,9 @@ module Messages
     event.respond Utilities.random_element(clarise_pics)
   end
 
-  message(contains: 'twitter.com') do |event|
+  message do |event|
     msg = event.message.text
+    return unless msg.match?(/https:\/\/twitter.com/)
     replacement = msg.gsub(/https:\/\/twitter.com/, "https://vxtwitter.com")
     event.respond(replacement)
   end
