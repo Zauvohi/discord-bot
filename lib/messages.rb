@@ -29,7 +29,7 @@ module Messages
     bot_id = event.bot.profile.id
     msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
     replacement = msg.gsub(/https:\/\/twitter.com/, "https://vxtwitter.com")
-    event.channnel.send(replacement)
+    event.respond(replacement)
   end
 
   mention(contains: /\sor\s+|\?/) do |event|
