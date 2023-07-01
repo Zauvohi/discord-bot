@@ -25,18 +25,10 @@ module Messages
     event.respond Utilities.random_element(clarise_pics)
   end
 
-  message(in: "#bot_spam") do |event|
-    msg = event.message.text
-    if msg.match?(/https:\/\/twitter.com/)
-      replacement = msg.gsub(/https:\/\/twitter.com/, "https://vxtwitter.com")
-      event.channnel.send(replacement)
-    end
-  end
-
-  message(in: "#bot_spam") do |event|
-    if /test/  =~ event.message.text
-      event.channel.send("Test!")
-    end
+  mention(contains: /https:\/\/twitter.com/) do |event|
+    msg = event.message.content.downcase.sub("<@#{bot_id}>", "")
+    replacement = msg.gsub(/https:\/\/twitter.com/, "https://vxtwitter.com")
+    event.channnel.send(replacement)
   end
 
   mention(contains: /\sor\s+|\?/) do |event|
